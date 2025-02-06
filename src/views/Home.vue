@@ -6,7 +6,7 @@
         <RouterView />
     </div>
     <el-divider>
-        <el-icon><star-filled color="#ADFF2F" /></el-icon>
+        <el-icon><star-filled color="#409EFF" /></el-icon>
     </el-divider>
 </template>
 

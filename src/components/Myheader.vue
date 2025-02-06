@@ -12,30 +12,30 @@
                 src="/images/element-plus-logo.svg"
                 alt="Element logo"
             /> -->
-            <el-icon style="color: #adff2f" size="200"><ElementPlus /></el-icon>
-            <el-text style="color: #adff2f">
+            <el-icon style="color: #409EFF" size="200"><ElementPlus /></el-icon>
+            <el-text style="color: #409EFF">
                 <strong>回头您自己起个名字</strong>
             </el-text>
         </el-menu-item>
         <el-menu-item index="1" @click="handermenuitemone">
-            <el-text style="color: #adff2f">
+            <el-text style="color: #409EFF">
                 <strong>预留1</strong>
             </el-text>
         </el-menu-item>
         <el-sub-menu index="2">
             <template #title>
-                <el-text style="color: #adff2f">
+                <el-text style="color: #409EFF">
                     <strong>功能</strong>
                 </el-text>
             </template>
             <el-menu-item index="2-1" @click="toscrapy">
-                <el-text style="color: #adff2f">
+                <el-text style="color: #409EFF">
                     <strong>寻找货源(爬虫)</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
             <el-menu-item index="2-3" @click="logout">
-                <el-text style="color: #adff2f">
+                <el-text style="color: #409EFF">
                     <strong>登出</strong>
                 </el-text>
             </el-menu-item>
