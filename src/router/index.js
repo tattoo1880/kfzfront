@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useTokenStore } from '@/stores/token'
+import { ElMessage } from 'element-plus'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,7 +25,10 @@ const router = createRouter({
           name: 'Scrapy',
           component: () => import('@/components/Scrapy.vue'),
         }
-      ]
+      ],
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       name: 'adminlogin',
@@ -48,6 +53,30 @@ const router = createRouter({
       ]
     }
   ],
+})
+
+router.beforeEach((to, from, next) => {
+
+  console.log("luyoiluyoi")
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    console.log("!!!!!!!!")
+    console.log("!!!!!!!!")
+    console.log("!!!!!!!!")
+    console.log("!!!!!!!!")
+    const tokenStore = useTokenStore()
+    console.log(tokenStore.getInfo().isActived)
+    if (!tokenStore.getInfo().isActived) {
+      ElMessage.error('您的账号未激活')
+      next({
+        name: 'login',
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

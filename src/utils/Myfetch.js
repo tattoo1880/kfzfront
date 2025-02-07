@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { useTokenStore } from '@/stores/token';
 
-const tokenStore = useTokenStore();
-const jwt = tokenStore.getToken();
-
-console.log('jwt', jwt);
 
 
 export const myfectch = axios.create({
@@ -14,4 +10,3 @@ export const myfectch = axios.create({
 
 })
 
-myfectch.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
