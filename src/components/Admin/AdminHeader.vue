@@ -2,11 +2,7 @@
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
         @select="handleSelect">
         <el-menu-item index="0">
-            <!-- <img
-                style="width: 100px"
-                src="/images/element-plus-logo.svg"
-                alt="Element logo"
-            /> -->
+
             <el-icon style="color: #409EFF" size="200">
                 <ElementPlus />
             </el-icon>
@@ -16,7 +12,7 @@
         </el-menu-item>
         <el-menu-item index="1" @click="handermenuitemone">
             <el-text style="color: #409EFF">
-                <strong>{{ userinfo.username }} 欢迎登录</strong>
+                <strong>{{ myinfo.staffname }} 欢迎登录</strong>
             </el-text>
         </el-menu-item>
         <el-sub-menu index="2">
@@ -49,19 +45,20 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useTokenStore } from "@/stores/token";
-import { myfectch } from "@/utils/Myfetch";
+import { useAdminTokenStore } from "@/stores/admintoken";
+import axios from "axios";
 
-const usetoken = useTokenStore();
+const usetoken = useAdminTokenStore();
 
-const { userinfo, removeInfo, removeToken } = usetoken;
+const { admininfo, removeInfo } = usetoken;
 
 
 const myinfo = computed(() => {
-    return userinfo
+
+    return admininfo
 });
 
-console.log(myinfo.value);
+console.log(admininfo);
 
 
 const activeIndex = ref("1");
@@ -72,9 +69,6 @@ const handleSelect = (key, keyPath) => {
 
 const router = useRouter();
 
-// const auseSecTokenStore = useSecTokenStore();
-
-// const { secToken, setSecToken, getSecToken, clearSecToken } = auseSecTokenStore;
 
 
 
@@ -85,29 +79,43 @@ const handermenuitemone = () => {
 
 const logout = async () => {
     console.log("登出");
+    const senddata = {
+        uid: admininfo.uid,
+        staffname: admininfo.staffname,
+        token: admininfo.token
 
+    }
     try {
+        const res = await axios.post(
+            "http://127.0.0.1:8083/api/adminlogout",
+            senddata,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${admininfo.token}`,
+                },
+            }
 
-        const res = await myfectch.post("/api/logout", {
-            uid: userinfo.uid,
-            username: userinfo.username,
-        });
+        )
         console.log(res);
-        if(res.data.uid === userinfo.uid){
-            removeInfo();
-            removeToken();
-            router.push({ name: "login" });
-        }
-        // router.push({ name: "login" });
 
+
+
+        if (res.data.uid === admininfo.uid) {
+            removeInfo();
+            router.push({ name: "adminlogin" });
+        }
     } catch (error) {
         console.error(error);
     }
+
+
 };
 
 
 const toscrapy = () => {
-    router.push({ name: "Scrapy" });
+    // router.push({ name: "Scrapy" });
+    console.log("toscrapy");
 };
 </script>
 

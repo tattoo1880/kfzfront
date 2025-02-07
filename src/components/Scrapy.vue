@@ -97,8 +97,13 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { myfectch } from '@/utils/Myfetch';
+import { useTokenStore } from "@/stores/token";
+const { getToken } = useTokenStore();
+
+
+
 
 
 // 分页
@@ -107,28 +112,20 @@ const handleSizeChange = (val) => {
     console.log(`每页 ${val} 条`);
 };
 
-const handleCurrentChange = (val) => {
+const handleCurrentChange = async (val) => {
     console.log(`当前页: ${val}`);
 
     try {
-        myfectch.post("/api/getallinfo",
+
+
+        await myfectch.post("/api/getallinfo",
             {
                 shopid: kw.value,
                 page: val,
 
             },
 
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-
-            }
-
-        ).then((res) => {
-            console.log(res.data);
-            tabledata.value = res.data;
-        });
+        )
     } catch (error) {
         console.error(error);
     }
@@ -147,6 +144,9 @@ const tabledata = ref([]);
 const handlesearch = async () => {
     console.log(kw.value);
     try {
+
+        console.log(myfectch.defaults.headers);
+
         const res = await myfectch.post("/api/getallinfo",
             {
                 shopid: kw.value,
@@ -154,12 +154,6 @@ const handlesearch = async () => {
 
             },
 
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-
-            }
 
         )
         console.log(res.data);

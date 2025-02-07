@@ -1,7 +1,7 @@
 <template>
   <!-- todo routerview -->
   <div class="bodybody">
-      <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 

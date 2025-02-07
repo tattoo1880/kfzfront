@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Myheader />
+        <AdminHeader />
     </div>
     <div>
         <RouterView />
@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import Myheader from "@/components/Myheader.vue";
+import AdminHeader from "@/components/Admin/AdminHeader.vue";
 
 </script>
 
