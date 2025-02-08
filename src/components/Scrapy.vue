@@ -1,18 +1,23 @@
 <template>
+
+    <el-row class='row-bg' justify='end' style="margin-right: 20px;">
+
+        <el-affix position="top" :offset="120">
+            <el-button type="primary" plain :disabled="items.length === 0" @click="savaselect">添加至我的上传任务</el-button>
+        </el-affix>
+    </el-row>
+
     <el-row class="bg-row" justify="center">
         <el-text>
             <h2 style="color: #409eff">寻找货源</h2>
         </el-text>
     </el-row>
 
+
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input
-                v-model="kw"
-                style="max-width: 1600px; width: 800px"
-                placeholder="Please input"
-                class="input-with-select"
-            >
+            <el-input v-model="kw" style="max-width: 1600px; width: 800px" placeholder="Please input"
+                class="input-with-select">
                 <template #append>
                     <el-button @click="handlesearch">
                         <el-icon>
@@ -26,95 +31,52 @@
 
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table
-                :data="tabledata"
-                style="width: 100%; height: 70vh"
-                align="center"
-            >
-                <el-table-column
-                    prop="id"
-                    label="ID"
-                    width="100"
-                    align="center"
-                >
+            <el-table :data="tabledata" ref="multipleTableRef" style="width: 100%; height: 70vh" align="center"
+                @selection-change="handleSelectionChange">
+
+                <!-- 单选 -->
+                <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
+                <el-table-column prop="id" label="ID" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.itemid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="书名"
-                    width="150"
-                    align="center"
-                >
+                <el-table-column prop="title" label="书名" width="150" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.title }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="imgBigUrl"
-                    label="图片"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="imgBigUrl" label="图片" width="100" align="center">
                     <template v-slot="{ row }">
-                        <el-image
-                            style="width: 100px; height: 100px"
-                            :src="row.img"
-                        ></el-image>
+                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="authorname"
-                    label="作者"
-                    width="120"
-                    align="center"
-                >
+                <el-table-column prop="authorname" label="作者" width="120" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.author }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="price"
-                    label="价格"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="price" label="价格" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.price }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="quality"
-                    label="品相"
-                    width="60"
-                    align="center"
-                >
+                <el-table-column prop="quality" label="品相" width="60" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.pinxiang }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="press"
-                    label="出版社"
-                    width="200"
-                    align="center"
-                >
+                <el-table-column prop="press" label="出版社" width="200" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.publisher }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="pubDateText"
-                    label="isbn"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="pubDateText" label="isbn" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.isbn }}</el-tag>
                     </template>
@@ -126,12 +88,7 @@
                     </template>
                 </el-table-column> -->
 
-                <el-table-column
-                    prop="link"
-                    label="链接"
-                    width="400"
-                    align="center"
-                >
+                <el-table-column prop="link" label="链接" width="400" align="center">
                     <template v-slot="{ row }">
                         <el-link :href="row.link" target="_blank">{{
                             row.link
@@ -142,13 +99,8 @@
         </el-col>
     </el-row>
     <el-row class="row-bg" justify="center">
-        <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :page-size="10"
-            layout="total, prev, pager, next"
-            :total="totalnum"
-        />
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-size="10"
+            layout="total, prev, pager, next" :total="totalnum" />
     </el-row>
 </template>
 
@@ -156,12 +108,17 @@
 import { ref, reactive, computed } from "vue";
 import { myfectch } from "@/utils/Myfetch";
 import { useTokenStore } from "@/stores/token";
+import { useTaskStore } from "@/stores/task";
 const { getToken } = useTokenStore();
+
 
 const jwt = getToken();
 console.log("=========");
 console.log(jwt);
 console.log("=========");
+
+
+
 
 // 分页
 
@@ -241,6 +198,37 @@ const handlesearch = async () => {
         console.error(error);
     }
 };
+
+
+const items = ref([])
+
+//todo select
+const selectable = (row, index) => {
+    // console.log(row, index);
+    return row.index != 0;
+};
+const handleSelectionChange = (val) => {
+    items.value = [...val];
+    console.log(items.value);
+    console.log(items.value.length);
+};
+
+
+
+
+const savaselect = () => {
+    console.log(items.value);
+    items.value.forEach((item) => {
+        const itemid = item.itemid;
+        const title = item.title;
+        const price = item.price;
+        const img = item.img;
+        const desc = item.author + " " + item.publisher + " " + item.isbn + " " + item.pinxiang;
+        const quantity = 0;
+        useTaskStore().setSingleBook(itemid, title, price, img, desc, quantity);
+    });
+};
+
 </script>
 
 <style lang="less" scoped></style>

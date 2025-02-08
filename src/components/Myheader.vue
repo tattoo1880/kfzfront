@@ -1,11 +1,6 @@
 <template>
-    <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        :ellipsis="false"
-        @select="handleSelect"
-    >
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
+        @select="handleSelect">
         <el-menu-item index="0">
             <!-- <img
                 style="width: 100px"
@@ -33,6 +28,11 @@
             <el-menu-item index="2-1" @click="toscrapy">
                 <el-text style="color: #409eff">
                     <strong>寻找货源(爬虫)</strong>
+                </el-text>
+            </el-menu-item>
+            <el-menu-item index="2-2" @click="totask">
+                <el-text style="color: #409eff">
+                    <strong>我的上传任务</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
@@ -115,10 +115,14 @@ const logout = async () => {
 const toscrapy = () => {
     router.push({ name: "Scrapy" });
 };
+
+const totask = () => {
+    router.push({ name: "Task" });
+};
 </script>
 
 <style>
-.el-menu--horizontal > .el-menu-item:nth-child(1) {
+.el-menu--horizontal>.el-menu-item:nth-child(1) {
     margin-right: auto;
 }
 </style>

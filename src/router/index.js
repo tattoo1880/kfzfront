@@ -24,6 +24,11 @@ const router = createRouter({
           path: '',
           name: 'Scrapy',
           component: () => import('@/components/Scrapy.vue'),
+        },
+        {
+          path: 'task',
+          name: 'Task',
+          component: () => import('@/components/Task.vue')
         }
       ],
       meta: {
