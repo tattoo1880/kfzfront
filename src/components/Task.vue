@@ -1,7 +1,7 @@
 <template>
 
 
-    <el-row class='row-bg' justify='start'>
+    <el-row class='row-bg' justify='center'>
         <el-text>
             <h2 style="color: #409eff">我的任务</h2>
         </el-text>
