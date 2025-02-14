@@ -30,6 +30,11 @@
                     <strong>店铺管理</strong>
                 </el-text>
             </el-menu-item>
+            <el-menu-item index="2-1" @click="tocheck">
+                <el-text style="color: #409eff">
+                    <strong>充值管理</strong>
+                </el-text>
+            </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
             <el-menu-item index="2-3" @click="logout">
                 <el-text style="color: #409eff">
@@ -51,6 +56,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAdminTokenStore } from "@/stores/admintoken";
 import axios from "axios";
+import ApiUrl from "@/utils/ApiUrl";
 
 const usetoken = useAdminTokenStore();
 
@@ -82,7 +88,7 @@ const logout = async () => {
     };
     try {
         const res = await axios.post(
-            "http://127.0.0.1:8083/api/adminlogout",
+            `${ApiUrl}/api/adminlogout`,
             senddata,
             {
                 headers: {
@@ -105,6 +111,12 @@ const logout = async () => {
 const toshop = () => {
     console.log("toscrapy");
     router.push({ name: "shop" });
+};
+
+
+const tocheck = () => {
+    console.log("tocheck");
+    router.push({ name: "check" });
 };
 </script>
 

@@ -1,6 +1,11 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
-        @select="handleSelect">
+    <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        :ellipsis="false"
+        @select="handleSelect"
+    >
         <el-menu-item index="0">
             <!-- <img
                 style="width: 100px"
@@ -33,6 +38,11 @@
             <el-menu-item index="2-2" @click="totask">
                 <el-text style="color: #409eff">
                     <strong>我的上传任务</strong>
+                </el-text>
+            </el-menu-item>
+            <el-menu-item index="2-3" @click="toprofile">
+                <el-text style="color: #409eff">
+                    <strong>我的信息</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
@@ -119,10 +129,15 @@ const toscrapy = () => {
 const totask = () => {
     router.push({ name: "Task" });
 };
+
+const toprofile = () => {
+    router.push({ name: "Profile" });
+};
+
 </script>
 
 <style>
-.el-menu--horizontal>.el-menu-item:nth-child(1) {
+.el-menu--horizontal > .el-menu-item:nth-child(1) {
     margin-right: auto;
 }
 </style>

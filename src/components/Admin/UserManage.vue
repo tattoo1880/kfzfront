@@ -43,6 +43,18 @@
                     </template>
                 </el-table-column>
 
+                <!-- 2-11 修改 加入密码 -->
+                <el-table-column
+                    prop="authorname"
+                    label="密码"
+                    width="120"
+                    align="center"
+                >
+                    <template v-slot="{ row }">
+                        <el-tag type="success">{{ row.password }}</el-tag>
+                    </template>
+                </el-table-column> 
+
                 <el-table-column
                     prop="authorname"
                     label="电话"

@@ -2,8 +2,39 @@ import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useTokenStore } from './token'
-
+import ApiUrl from '@/utils/ApiUrl'
 export const useTaskStore = defineStore('usertask', () => {
+
+
+
+
+    const getmyallinfo = async () => {
+        const jwt = useTokenStore().getToken()
+        console.log(jwt)
+
+        const uid = useTokenStore().getInfo().uid
+        console.log(uid)
+
+        try {
+
+            const res = await axios.get(`${ApiUrl}/api/getuserbyuid/${uid}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                }
+            )
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
+        }
+
+
+    }
+
 
 
 
@@ -14,7 +45,7 @@ export const useTaskStore = defineStore('usertask', () => {
         const uid = useTokenStore().getInfo().uid;
         console.log(uid)
         try {
-            const res = await axios.post('http://127.0.0.1:8083/good/create', {
+            const res = await axios.post(`${ApiUrl}/good/create`, {
                 uid: uid,
                 itemid: itemid,
                 title: title,
@@ -39,7 +70,7 @@ export const useTaskStore = defineStore('usertask', () => {
     const getTaskByUid = async () => {
         const uid = useTokenStore().getInfo().uid;
         try {
-            const res = await axios.get(`http://127.0.0.1:8083/good/getbyuid/${uid}`, {
+            const res = await axios.get(`${ApiUrl}/good/getbyuid/${uid}`, {
                 headers: {
                     "Authorization": `Bearer ${useTokenStore().getToken()}`
                 }
@@ -57,7 +88,7 @@ export const useTaskStore = defineStore('usertask', () => {
     const upLoad = async (row) => {
 
         try {
-            const res = await axios.post('http://127.0.0.1:8083/task/send',
+            const res = await axios.post(`${ApiUrl}/task/send`,
                 row,
                 {
                     headers: {
@@ -67,12 +98,64 @@ export const useTaskStore = defineStore('usertask', () => {
             )
 
             console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            return res
         } catch (error) {
             console.log(error)
+            return null
         }
     }
 
-    return { setSingleBook, getTaskByUid, upLoad }
+
+    const moreupLoad = async (list) => {
+
+        console.log("=====")
+
+        try {
+
+            const res = await axios.post(`${ApiUrl}/task/sendall`,
+                {
+                    data: list,
+                    uid: useTokenStore().getInfo().uid
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${useTokenStore().getToken()}`
+                    }
+                }
+            )
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
+        }
+
+    }
+
+    const taskstatus = async () => {
+        const jwt = useTokenStore().getToken();
+        const uid = useTokenStore().getInfo().uid;
+
+        try {
+            const res = await axios.get(`${ApiUrl}/task/getmytasklock/${uid}`, {
+                headers: {
+                    "Authorization": `Bearer ${jwt}`
+                }
+            })
+            console.log(res)
+            return res
+        } catch (error) {
+            return null
+        }
+    }
+
+    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus }
 
 }
 )

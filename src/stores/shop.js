@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useAdminTokenStore } from './admintoken'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-
+import ApiUrl from '@/utils/ApiUrl'
 export const useShopStore = defineStore('useshop', () => {
 
     const useadmintoken = useAdminTokenStore()
@@ -12,7 +12,7 @@ export const useShopStore = defineStore('useshop', () => {
 
     const getAllUsers = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8083/api/getalluser',
+            const response = await axios.get(`${ApiUrl}/api/getalluser`,
                 {
                     headers: {
                         "Authorization": `Bearer ${admininfo.token}`
@@ -71,7 +71,7 @@ export const useShopStore = defineStore('useshop', () => {
 
 
         try {
-            const res = await axios.post('http://127.0.0.1:8083/shop/create',
+            const res = await axios.post(`${ApiUrl}/shop/create`,
                 senddata,
                 {
                     headers: {
@@ -97,7 +97,7 @@ export const useShopStore = defineStore('useshop', () => {
     const getShopList = async () => {
 
         try {
-            const response = await axios.get('http://127.0.0.1:8083/shop/getAllShops',
+            const response = await axios.get(`${ApiUrl}/shop/getAllShops`,
                 {
                     headers: {
                         "Authorization": `Bearer ${admininfo.token}`
@@ -115,7 +115,7 @@ export const useShopStore = defineStore('useshop', () => {
 
     const deleteByuseruid = async (useruid) => {
         try {
-            const res = await axios.post('http://127.0.0.1:8083/shop/deleteShopByUserUid',
+            const res = await axios.post(`${ApiUrl}/shop/deleteShopByUserUid`,
                 {
                     UserUid: useruid
                 },
@@ -135,7 +135,7 @@ export const useShopStore = defineStore('useshop', () => {
 
     const updateByuseruid = async (obj) => {
         try {
-            const res = await axios.post('http://127.0.0.1:8083/shop/updateShop',
+            const res = await axios.post(`${ApiUrl}/shop/updateShop`,
                 obj,
                 {
                     headers: {

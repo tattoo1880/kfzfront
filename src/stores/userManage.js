@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useAdminTokenStore } from './admintoken'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-
+import ApiUrl from '@/utils/ApiUrl'
 export const useUserManageStore = defineStore('useusermanage', () => {
 
     const useadmintoken = useAdminTokenStore()
@@ -12,7 +12,7 @@ export const useUserManageStore = defineStore('useusermanage', () => {
 
     const getAllUsers = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8083/api/getalluser',
+            const response = await axios.get(`${ApiUrl}/api/getalluser`,
                 {
                     headers: {
                         "Authorization": `Bearer ${admininfo.token}`
@@ -52,7 +52,7 @@ export const useUserManageStore = defineStore('useusermanage', () => {
 
     const addUser = async (uid, username, password, email, phone) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8083/api/createuser', {
+            const response = await axios.post(`${ApiUrl}/api/createuser`, {
                 uid,
                 username,
                 password,
@@ -75,7 +75,7 @@ export const useUserManageStore = defineStore('useusermanage', () => {
     const updateUser = async (form) => {
         console.log(form)
         try {
-            const res = await axios.post('http://127.0.0.1:8083/api/updateuser', form, {
+            const res = await axios.post(`${ApiUrl}/api/updateuser`, form, {
                 headers: {
                     "Authorization": `Bearer ${admininfo.token}`
                 }
@@ -94,7 +94,7 @@ export const useUserManageStore = defineStore('useusermanage', () => {
         console.log(uid)
         console.log("????")
         try {
-            const res = await axios.post('http://127.0.0.1:8083/api/deleteuser', {
+            const res = await axios.post(`${ApiUrl}/api/deleteuser`, {
                 uid: uid
             }, {
                 headers: {

@@ -29,6 +29,11 @@ const router = createRouter({
           path: 'task',
           name: 'Task',
           component: () => import('@/components/Task.vue')
+        },
+        {
+          path :'Profile',
+          "name": "Profile",
+          component: () => import('@/components/Profile.vue')
         }
       ],
       meta: {
@@ -59,6 +64,11 @@ const router = createRouter({
           path: 'shop',
           name: 'shop',
           component: () => import('@/components/Admin/Shop.vue')
+        },
+        {
+          path: 'check',
+          name: 'check',
+          component: () => import('@/components/Admin/Check.vue')
         }
       ]
     }
