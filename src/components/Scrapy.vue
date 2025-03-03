@@ -87,7 +87,7 @@
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.itemid }}</el-tag>
+                        <el-tag type="success">{{ row.itemId }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -97,11 +97,11 @@
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.title }}</el-tag>
+                        <el-tag type="success">{{ row.itemName }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="imgBigUrl"
+                    prop="imgBig"
                     label="图片"
                     width="100"
                     align="center"
@@ -109,7 +109,7 @@
                     <template v-slot="{ row }">
                         <el-image
                             style="width: 100px; height: 100px"
-                            :src="row.img"
+                            :src="row.imgBig"
                         ></el-image>
                     </template>
                 </el-table-column>
@@ -143,18 +143,18 @@
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.pinxiang }}</el-tag>
+                        <el-tag type="success">{{ row.quality }}</el-tag>
                     </template>
                 </el-table-column>
 
                 <el-table-column
                     prop="press"
-                    label="出版社"
+                    label="出版日期"
                     width="200"
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.publisher }}</el-tag>
+                        <el-tag type="success">{{ row.pubDate }}</el-tag>
                     </template>
                 </el-table-column>
 
@@ -182,8 +182,8 @@
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-link :href="row.link" target="_blank">{{
-                            row.link
+                        <el-link :href="row.pcUrl" target="_blank">{{
+                            row.pcUrl
                         }}</el-link>
                     </template>
                 </el-table-column>
@@ -224,24 +224,7 @@ const handleSizeChange = (val) => {
 const handleCurrentChange = async (val) => {
     console.log(`当前页: ${val}`);
 
-    try {
-        const res = await myfectch.post(
-            "/api/getallinfo",
-            {
-                shopid: kw.value,
-                page: val,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${jwt}`,
-                },
-            }
-        );
-        console.log(res.data);
-        tabledata.value = res.data;
-    } catch (error) {
-        console.error(error);
-    }
+    tabledata.value = alldata.value.slice((val-1)*10,val*10)
 };
 
 const kw = ref("");
@@ -256,10 +239,9 @@ const handlesearch = async () => {
         console.log(myfectch.defaults.headers);
 
         const res = await myfectch.post(
-            "/api/getallinfo",
+            "/api/newgetallinfo",
             {
                 shopid: kw.value,
-                page: 1,
             },
             {
                 headers: {
@@ -268,7 +250,7 @@ const handlesearch = async () => {
             }
         );
         console.log(res.data);
-        tabledata.value = res.data;
+        tabledata.value = res.data.slice(0,30)
         totalnum.value = res.data[0].totalPageNum;
         // let myobj = JSON.parse(res.data);
         // console.log(myobj);
@@ -310,19 +292,19 @@ const handleSelectionChange = (val) => {
 const savaselect = () => {
     console.log(items.value);
     items.value.forEach((item) => {
-        const itemid = item.itemid;
-        const title = item.title;
+        const itemid = item.itemId;
+        const title = item.itemName;
         const price = item.price;
-        const img = item.img;
+        const img = item.imgBig;
         const desc =
             item.author +
             " " +
-            item.publisher +
+            item.pubDate +
             " " +
             item.isbn +
             " " +
-            item.pinxiang;
-        const quantity = 0;
+            item.quality;
+        const quantity = item.quality
         useTaskStore().setSingleBook(itemid, title, price, img, desc, quantity);
     });
 };
@@ -448,8 +430,11 @@ const handlesearch2 = async () => {
 
     try {
         for (let item of list1) {
-            const res = await getallpage(item);
-            console.log(res.length);
+            //const res = await getallpage(item);
+            const res =await newgetallinfo(item)
+            totalnum.value = res.length/10;
+            alldata.value = res
+            tabledata.value = alldata.value.slice(0,30)
             eloading.close();
         }
     } catch (error) {
@@ -459,6 +444,29 @@ const handlesearch2 = async () => {
         eloading.close();
     }
 };
+const alldata = ref([]);
+
+
+const newgetallinfo = async(kw) =>{
+
+
+    try {
+        const res = await myfectch.post(
+            "/api/newgetallinfo",
+            {
+                shopid:kw
+            },
+{
+                timeout:1000000
+}            
+
+        )
+        console.log(res)
+        return res.data
+    } catch (error) {
+        console.log(error)        
+    }
+}
 </script>
 
 <style lang="less" scoped></style>

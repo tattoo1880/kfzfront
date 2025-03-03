@@ -91,7 +91,7 @@
                 <!-- 库存 -->
                 <el-table-column
                     prop="stock"
-                    label="库存"
+                    label="品相"
                     width="100"
                     align="center"
                 >
@@ -221,12 +221,12 @@ const handleDelete = async (row) => {
 };
 
 //监控myquotaleft,如果小于0,所有上传按钮不可用
-watch(myquotaleft, (newVal) => {
-    console.log(newVal);
-    if (newVal <= 49990) {
-        ElMessage.error("今日任务已完成");
-    }
-});
+// watch(myquotaleft, (newVal) => {
+//     console.log(newVal);
+//     if (newVal <= 49990) {
+//         ElMessage.error("今日任务已完成");
+//     }
+// });
 
 watch(whetherall, (newVal) => {
     console.log(newVal);
