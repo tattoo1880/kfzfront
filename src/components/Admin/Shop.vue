@@ -29,6 +29,10 @@
                 </el-select>
             </el-form-item>
 
+            <el-form-item label="价格规则">
+                <el-input v-model="createform.rule" placeholder="上浮比例使用*1.x,增加使用+xx的方式"/>
+            </el-form-item>
+
 
             <el-form-item label="店铺key">
                 <el-button type="danger" @click="aagetcookies">
@@ -65,6 +69,12 @@
                 <el-table-column prop="username" label="用户名" width="120" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.user.username }}</el-tag>
+                    </template>
+                </el-table-column>
+                <!-- 价格规则 -->
+                <el-table-column prop="rule" label="价格规则" width="200" align="center">
+                    <template v-slot="{ row }">
+                        <el-tag type="success">{{ row.rule }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column prop="shopid" label="到期时间" width="200" align="center">
@@ -150,6 +160,7 @@ const createform = reactive({
     uid: "",
     shopip: "",
     userid: "",
+    rule: "",
 });
 
 const showme1 = ref(false);
@@ -233,6 +244,7 @@ const aagetcookies = async () => {
         {
             shopname: createform.shopname,
             userid: createform.userid,
+            rule: createform.rule,
         },
         {
             timeout: 1000000,
