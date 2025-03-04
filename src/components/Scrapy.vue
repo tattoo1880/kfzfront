@@ -293,17 +293,22 @@ const savaselect = () => {
     console.log(items.value);
     items.value.forEach((item) => {
         const itemid = item.itemId;
-        const title = item.itemName;
+        const title = item.itemName + " -- " + "作者："+ item.author;
         const price = item.price;
         const img = item.imgBig;
         const desc =
+            
+            "作者：" +
             item.author +
             " " +
+            "出版社日期：" +
             item.pubDate +
             " " +
+            "isbn:" +
             item.isbn +
             " " +
-            item.quality;
+            "Id: " +
+            item.pcUrl.split(".com")[1];
         const quantity = item.quality
         useTaskStore().setSingleBook(itemid, title, price, img, desc, quantity);
     });

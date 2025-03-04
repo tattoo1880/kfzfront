@@ -40,8 +40,13 @@ export const useTaskStore = defineStore('usertask', () => {
 
     const setSingleBook = async (itemid, title, price, img, desc, quantity) => {
 
+
+        console.log("====")
+        console.log(itemid, title, price, img, desc, quantity)
+        console.log("====")
         const jwt = useTokenStore().getToken();
         console.log(jwt)
+        console.log(useTokenStore().getInfo())
         const uid = useTokenStore().getInfo().uid;
         console.log(uid)
         try {
@@ -86,6 +91,7 @@ export const useTaskStore = defineStore('usertask', () => {
     }
 
     const upLoad = async (row) => {
+        console.log(row)
 
         try {
             const res = await axios.post(`${ApiUrl}/task/send`,
@@ -96,13 +102,6 @@ export const useTaskStore = defineStore('usertask', () => {
                     }
                 }
             )
-
-            console.log(res)
-            console.log(res)
-            console.log(res)
-            console.log(res)
-            console.log(res)
-            console.log(res)
             return res
         } catch (error) {
             console.log(error)
