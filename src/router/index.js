@@ -34,6 +34,11 @@ const router = createRouter({
           path :'Profile',
           "name": "Profile",
           component: () => import('@/components/Profile.vue')
+        },
+        {
+          path: 'usershop',
+          name: 'usershop',
+          component: () => import('@/components/UserShop.vue')
         }
       ],
       meta: {

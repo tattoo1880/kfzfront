@@ -1,0 +1,145 @@
+<template>
+
+    <div>
+        <el-row class="row-bg" justify="center">
+            <el-text>
+                <h2 style="color: #409eff">我的店铺</h2>
+            </el-text>
+        </el-row>
+
+
+        <el-row class="bg-row" justify="end" style="margin-right: 30px">
+            <el-button type="primary" plain @click="openurlhandler">
+                获取店铺授权
+            </el-button>
+        </el-row>
+
+    </div>
+
+    <!-- 建立一个 card 显示自己店铺的信息 -->
+    <el-card class="box-card" style="margin: 20px">
+        <template #header>
+            <div class="card-header">
+                <span>{{ shopinfo.shopName }}</span>
+            </div>
+        </template>
+        <el-descriptions :column="1" border>
+            <el-descriptions-item label="店铺ID">
+                {{ shopinfo.shopUid }}
+            </el-descriptions-item>
+            <el-descriptions-item label="店铺用户ID">
+                {{ shopinfo.shopUserId }}
+            </el-descriptions-item>
+            <el-descriptions-item label="店铺topSession">
+                {{ shopinfo.shoptopsession }}
+            </el-descriptions-item>
+            <el-descriptions-item label="店铺运费规则">
+                <el-tag v-if="shopinfo.yfrule" type="success">{{ shopinfo.yfrule }}</el-tag>
+                <el-button v-else type="danger" plain @click="chooseyf">选择运费模版</el-button>
+            </el-descriptions-item>
+        </el-descriptions>
+    </el-card>
+
+    <!-- 选择运费模版的 dialog -->
+    <el-dialog title="选择运费模版" v-model="showme1" width="30%" center>
+        <el-form :model="createform" label-position="left" label-width="auto" class="withborder
+        ">
+            <el-form-item label="选择运费模版">
+                <el-select v-model="createform.yfrule" placeholder="请选择运费模版">
+                    <el-option v-for="item in yfruleList" :key="item.template_id" :label="item.name"
+                        :value="item.template_id" />
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="confirmyf">确定</el-button>
+                <el-button @click="showme1 = false">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
+
+
+</template>
+
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useTbSdkstore } from '@/stores/tbsdk';
+import { ElMessage } from 'element-plus';
+
+const showme1 = ref(false);
+const chooseyf = async () => {
+    const res = await useTbSdkstore().getyftemplate(shopinfo.shopName)
+    console.log(res.data);
+    yfruleList.value = res.data;
+    showme1.value = true;
+};
+
+const confirmyf = async () => {
+    console.log(createform.yfrule);
+    const res = await useTbSdkstore().updateyf(createform.yfrule);
+    console.log(res.data);
+    window.location.reload();
+}
+
+
+
+const createform = reactive({
+    yfrule: "",
+});
+
+const yfruleList = ref([])
+
+const shopinfo = reactive({
+    shopName: "",
+    shopUid: "",
+    shopUserId: "",
+    shoptopsession: "",
+    yfrule: "",
+});
+
+
+
+const openurl = ref('');
+
+onMounted(async () => {
+
+    const res1 = await useTbSdkstore().getshopbyuid();
+    console.log(res1.data);
+
+    if (res1.data.shopName === "") {
+        ElMessage.error("请联系管理员先创建店铺");
+    } else {
+        ElMessage.success("店铺读取成功");
+        shopinfo.shopName = res1.data.shopName;
+        shopinfo.shopUid = res1.data.shopIp;
+        shopinfo.shopUserId = res1.data.userUid;
+        shopinfo.shoptopsession = res1.data.topSession;
+        shopinfo.yfrule = res1.data.yfRule;
+    }
+
+
+    const res = await useTbSdkstore().getAuth();
+    console.log(res.data);
+    openurl.value = res.data;
+});
+
+const openurlhandler = () => {
+    window.open(openurl.value);
+};
+
+
+
+
+
+
+
+
+
+</script>
+
+<style scoped>
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>

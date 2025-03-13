@@ -1,11 +1,6 @@
 <template>
-    <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        :ellipsis="false"
-        @select="handleSelect"
-    >
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
+        @select="handleSelect">
         <el-menu-item index="0">
             <!-- <img
                 style="width: 100px"
@@ -43,6 +38,11 @@
             <el-menu-item index="2-3" @click="toprofile">
                 <el-text style="color: #409eff">
                     <strong>我的信息</strong>
+                </el-text>
+            </el-menu-item>
+            <el-menu-item index="2-4" @click="tousershop">
+                <el-text style="color: #409eff">
+                    <strong>我的店铺</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
@@ -134,10 +134,14 @@ const toprofile = () => {
     router.push({ name: "Profile" });
 };
 
+const tousershop = () => {
+    router.push({ name: "usershop" });
+};
+
 </script>
 
 <style>
-.el-menu--horizontal > .el-menu-item:nth-child(1) {
+.el-menu--horizontal>.el-menu-item:nth-child(1) {
     margin-right: auto;
 }
 </style>
