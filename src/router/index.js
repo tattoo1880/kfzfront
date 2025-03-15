@@ -74,6 +74,12 @@ const router = createRouter({
           path: 'check',
           name: 'check',
           component: () => import('@/components/Admin/Check.vue')
+        },
+        {
+          path: 'weijin',
+          name: 'weijin',
+          component: () => import('@/components/Admin/Weijin.vue')
+
         }
       ]
     }

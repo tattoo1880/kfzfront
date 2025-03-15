@@ -35,6 +35,11 @@
                     <strong>充值管理</strong>
                 </el-text>
             </el-menu-item>
+            <el-menu-item index="2-2" @click="toweijin">
+                <el-text style="color: #409eff">
+                    <strong>违禁词管理</strong>
+                </el-text>
+            </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
             <el-menu-item index="2-3" @click="logout">
                 <el-text style="color: #409eff">
@@ -87,16 +92,12 @@ const logout = async () => {
         token: admininfo.token,
     };
     try {
-        const res = await axios.post(
-            `${ApiUrl}/api/adminlogout`,
-            senddata,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${admininfo.token}`,
-                },
-            }
-        );
+        const res = await axios.post(`${ApiUrl}/api/adminlogout`, senddata, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${admininfo.token}`,
+            },
+        });
         console.log(res);
 
         if (res.data.uid === admininfo.uid) {
@@ -113,10 +114,14 @@ const toshop = () => {
     router.push({ name: "shop" });
 };
 
-
 const tocheck = () => {
     console.log("tocheck");
     router.push({ name: "check" });
+};
+
+const toweijin = () => {
+    console.log("toweijin");
+    router.push({ name: "weijin" });
 };
 </script>
 
