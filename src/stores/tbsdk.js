@@ -104,7 +104,7 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
         }
     }
 
-    const updateyf = async(templateid) => {
+    const updateyf = async (templateid) => {
         const jwt = useTokenStore().getToken()
         console.log(jwt)
 
@@ -135,9 +135,91 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
 
 
 
+    const addRule = async (rule) => {
+
+        rule.uid = useTokenStore().getInfo().uid
+        console.log(rule)
+
+        try {
+            const jwt = useTokenStore().getToken()
+            const res = await axios.post(`${ApiUrl}/pricerule/create`,
+                rule,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                }
+            )
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+
+    }
 
 
-    return { getAuth, getshopbyuid, getyftemplate, updateyf }
+    const getruleByuid = async () => {
+        const jwt = useTokenStore().getToken()
+        console.log(jwt)
+
+        const uid = useTokenStore().getInfo().uid
+        console.log(uid)
+
+        try {
+
+            const res = await axios.post(`${ApiUrl}/pricerule/getbyuid`,
+                {
+                    uid: uid
+
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                }
+
+            )
+
+            console.log(res)
+            return res
+        }
+        catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+    const deleteRule = async (ruleid) => {
+        
+        try {
+            const jwt = useTokenStore().getToken()
+            const res = await axios.post(`${ApiUrl}/pricerule/delete`,
+                {
+                    id: ruleid
+
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                }
+
+            )
+
+            console.log(res)
+            return res
+        }
+        catch (error) {
+            console.log(error)
+            return null
+        }
+    }
+
+
+
+    return { getAuth, getshopbyuid, getyftemplate, updateyf, addRule, getruleByuid, deleteRule }
 
 }
 )

@@ -459,7 +459,9 @@ const newgetallinfo = async(kw) =>{
         const res = await myfectch.post(
             "/api/newgetallinfo",
             {
-                shopid:kw
+                shopid:kw,
+                uid : useTokenStore().getInfo().uid
+
             },
 {
                 timeout:1000000

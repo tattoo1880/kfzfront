@@ -29,21 +29,21 @@
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="价格规则">
+            <!-- <el-form-item label="价格规则">
                 <el-input v-model="createform.rule" placeholder="上浮比例使用*1.x,增加使用+xx的方式"/>
-            </el-form-item>
+            </el-form-item> -->
 
 
-            <el-form-item label="店铺key">
+            <!-- <el-form-item label="店铺key">
                 <el-button type="danger" @click="aagetcookies">
                     获取key
                 </el-button>
-            </el-form-item>
+            </el-form-item> -->
 
-            <!-- <el-form-item>
+            <el-form-item>
                 <el-button type="primary" @click="createShop">新建</el-button>
                 <el-button @click="showme1 = false">取消</el-button>
-            </el-form-item> -->
+            </el-form-item>
         </el-form>
     </el-dialog>
 
@@ -61,7 +61,7 @@
                         <el-tag type="success">{{ row.shopName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="shopip" label="店铺地址" width="200" align="center">
+                <el-table-column prop="shopip" label="店铺ID" width="200" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.shopIp }}</el-tag>
                     </template>
@@ -139,6 +139,8 @@ import { ref, reactive, onMounted } from "vue";
 import { useShopStore } from "@/stores/shop";
 import { ElMessage } from "element-plus";
 import { CirclePlus } from "@element-plus/icons-vue";
+//!导入uuid
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 const userList = ref([]);
@@ -176,12 +178,15 @@ const prepareCreateShop = () => {
 const createShop = async () => {
     console.log("新建店铺");
 
+    createform.uid = uuidv4();
+
     const res = await useShopStore().createShop(
         createform.uid,
         createform.shopname,
         createform.shopip,
         createform.userid
     );
+    
 
     if (res.data !== "") {
         showme1.value = false;
