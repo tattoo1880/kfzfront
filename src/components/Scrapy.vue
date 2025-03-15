@@ -87,17 +87,17 @@
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.itemId }}</el-tag>
+                        <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
                     prop="title"
                     label="书名"
-                    width="150"
+                    width="550"
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.itemName }}</el-tag>
+                        <el-tag type="success">{{ row.goodName }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -109,19 +109,19 @@
                     <template v-slot="{ row }">
                         <el-image
                             style="width: 100px; height: 100px"
-                            :src="row.imgBig"
+                            :src="row.img"
                         ></el-image>
                     </template>
                 </el-table-column>
 
                 <el-table-column
                     prop="authorname"
-                    label="作者"
-                    width="120"
+                    label="描述"
+                    width="520"
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.author }}</el-tag>
+                        <el-tag type="success">{{ row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
@@ -139,54 +139,15 @@
                 <el-table-column
                     prop="quality"
                     label="品相"
-                    width="60"
-                    align="center"
-                >
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.quality }}</el-tag>
-                    </template>
-                </el-table-column>
-
-                <el-table-column
-                    prop="press"
-                    label="出版日期"
-                    width="200"
-                    align="center"
-                >
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.pubDate }}</el-tag>
-                    </template>
-                </el-table-column>
-
-                <el-table-column
-                    prop="pubDateText"
-                    label="isbn"
                     width="100"
                     align="center"
                 >
                     <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.isbn }}</el-tag>
+                        <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <!-- <el-table-column prop="shopAreaText" label="店铺地区" width="100" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.shopAreaText }}</el-tag>
-                    </template>
-                </el-table-column> -->
 
-                <el-table-column
-                    prop="link"
-                    label="链接"
-                    width="400"
-                    align="center"
-                >
-                    <template v-slot="{ row }">
-                        <el-link :href="row.pcUrl" target="_blank">{{
-                            row.pcUrl
-                        }}</el-link>
-                    </template>
-                </el-table-column>
             </el-table>
         </el-col>
     </el-row>
