@@ -17,7 +17,7 @@
         </el-text>
     </el-row>
 
-    <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
+    <!-- <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
             <el-input
                 v-model="kw"
@@ -34,7 +34,7 @@
                 </template>
             </el-input>
         </div>
-    </el-row>
+    </el-row> -->
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
             <el-input
@@ -146,8 +146,6 @@
                         <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
                 </el-table-column>
-
-
             </el-table>
         </el-col>
     </el-row>
@@ -168,6 +166,8 @@ import { myfectch } from "@/utils/Myfetch";
 import { useTokenStore } from "@/stores/token";
 import { useTaskStore } from "@/stores/task";
 import { ElLoading, ElMessage } from "element-plus";
+import {useRouter} from "vue-router";
+const router = useRouter();
 
 const { getToken } = useTokenStore();
 
@@ -185,7 +185,7 @@ const handleSizeChange = (val) => {
 const handleCurrentChange = async (val) => {
     console.log(`当前页: ${val}`);
 
-    tabledata.value = alldata.value.slice((val-1)*10,val*10)
+    tabledata.value = alldata.value.slice((val - 1) * 10, val * 10);
 };
 
 const kw = ref("");
@@ -211,7 +211,7 @@ const handlesearch = async () => {
             }
         );
         console.log(res.data);
-        tabledata.value = res.data.slice(0,30)
+        tabledata.value = res.data.slice(0, 30);
         totalnum.value = res.data[0].totalPageNum;
         // let myobj = JSON.parse(res.data);
         // console.log(myobj);
@@ -254,11 +254,10 @@ const savaselect = () => {
     console.log(items.value);
     items.value.forEach((item) => {
         const itemid = item.itemId;
-        const title = item.itemName + " -- " + "作者："+ item.author;
+        const title = item.itemName + " -- " + "作者：" + item.author;
         const price = item.price;
         const img = item.imgBig;
         const desc =
-            
             "作者：" +
             item.author +
             " " +
@@ -270,7 +269,7 @@ const savaselect = () => {
             " " +
             "Id: " +
             item.pcUrl.split(".com")[1];
-        const quantity = item.quality
+        const quantity = item.quality;
         useTaskStore().setSingleBook(itemid, title, price, img, desc, quantity);
     });
 };
@@ -397,12 +396,13 @@ const handlesearch2 = async () => {
     try {
         for (let item of list1) {
             //const res = await getallpage(item);
-            const res =await newgetallinfo(item)
-            totalnum.value = res.length/10;
-            alldata.value = res
-            tabledata.value = alldata.value.slice(0,30)
+            const res = await newgetallinfo(item);
+            totalnum.value = res.length / 10;
+            alldata.value = res;
+            tabledata.value = alldata.value.slice(0, 30);
             eloading.close();
         }
+        router.push({ name: "Task" });
     } catch (error) {
         ElMessage.error("获取数据失败");
         eloading.close();
@@ -412,29 +412,24 @@ const handlesearch2 = async () => {
 };
 const alldata = ref([]);
 
-
-const newgetallinfo = async(kw) =>{
-
-
+const newgetallinfo = async (kw) => {
     try {
         const res = await myfectch.post(
             "/api/newgetallinfo",
             {
-                shopid:kw,
-                uid : useTokenStore().getInfo().uid
-
+                shopid: kw,
+                uid: useTokenStore().getInfo().uid,
             },
-{
-                timeout:1000000
-}            
-
-        )
-        console.log(res)
-        return res.data
+            {
+                timeout: 1000000,
+            }
+        );
+        console.log(res);
+        return res.data;
     } catch (error) {
-        console.log(error)        
+        console.log(error);
     }
-}
+};
 </script>
 
 <style lang="less" scoped></style>
