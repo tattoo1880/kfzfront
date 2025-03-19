@@ -121,11 +121,11 @@
         style="width: 100%; height: 70vh"
         align="center"
     >
-        <el-table-column prop="id" label="ID" width="300" align="center">
+        <!-- <el-table-column prop="id" label="ID" width="300" align="center">
             <template v-slot="{ row }">
                 <el-tag type="success">{{ row.id }}</el-tag>
             </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
             prop="startPrice"
             label="起始价格"

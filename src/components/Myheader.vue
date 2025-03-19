@@ -11,7 +11,9 @@
                 <ElementPlus />
             </el-icon>
             <el-text style="color: #409eff">
-                <strong>回头您自己起个名字</strong>
+                <strong>
+                    <h1>上书宝</h1>
+                </strong>
             </el-text>
         </el-menu-item>
         <el-menu-item index="1" @click="handermenuitemone">

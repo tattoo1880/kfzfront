@@ -29,7 +29,7 @@
                                     >
                                         <el-text>
                                             <h2 style="color: #409eff">
-                                                回头您自己起名字
+                                                上书宝
                                             </h2>
                                         </el-text>
                                     </el-row>
