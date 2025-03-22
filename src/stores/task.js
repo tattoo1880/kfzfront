@@ -6,6 +6,9 @@ import ApiUrl from '@/utils/ApiUrl'
 export const useTaskStore = defineStore('usertask', () => {
 
 
+    const shopinfo = ref(null)
+
+
 
 
     const getmyallinfo = async () => {
@@ -82,7 +85,9 @@ export const useTaskStore = defineStore('usertask', () => {
             }
             )
 
-            console.log(res)
+            // console.log(res)
+            shopinfo.value = res.data[0]["shop"]
+
             return res
         } catch (e) {
             console.log(e)
@@ -154,7 +159,40 @@ export const useTaskStore = defineStore('usertask', () => {
         }
     }
 
-    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus }
+
+
+    const newsendall = async () => {
+        console.log("=====", shopinfo.value)
+        const jwt = useTokenStore().getToken();
+        console.log(jwt)
+        console.log(useTokenStore().getInfo())
+        const uid = useTokenStore().getInfo().uid;
+        console.log(uid)
+
+        try {
+            const res = await axios.post(`${ApiUrl}/task/newsendall`,
+                {
+                    session: uid,
+                    usernick: shopinfo.value.shopName,
+                    yfrule: shopinfo.value.yfRule,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                })
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
+        }
+
+
+    }
+
+    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall }
 
 }
 )

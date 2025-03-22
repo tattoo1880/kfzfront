@@ -1,22 +1,19 @@
 <template>
     <el-row class="row-bg" justify="end" style="margin-top: 30px">
         <el-col :span="6">
-            <el-tag type="success" style="margin-right: 20px"
-                >剩余任务额度:{{ myquotaleft }}</el-tag
-            >
+            <el-tag type="success" style="margin-right: 20px">剩余任务额度:{{ myquotaleft }}</el-tag>
         </el-col>
         <el-col :span="6">
-            <el-switch
-                v-model="whetherall"
-                size="large"
-                active-text="已上传"
-                inactive-text="未上传"
-            />
+            <el-switch v-model="whetherall" size="large" active-text="已上传" inactive-text="未上传" />
         </el-col>
         <el-col :span="6">
             <el-button type="primary" plain @click="sendalltoback">
                 全部上传
             </el-button>
+            <el-button type="success" plain @click="newsendall">
+                全部上传
+            </el-button>
+
         </el-col>
     </el-row>
 
@@ -28,97 +25,48 @@
 
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table
-                :data="tabledata"
-                style="width: 100%; height: 70vh"
-                align="center"
-            >
+            <el-table :data="tabledata" style="width: 100%; height: 70vh" align="center">
                 <!-- 2-11 加入index -->
 
-                <el-table-column
-                    type="index"
-                    label="序号"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column type="index" label="序号" width="100" align="center">
                     <template v-slot="scope">
                         <el-tag type="success">{{ scope.$index + 1 }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="id"
-                    label="ID"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="id" label="ID" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="书名"
-                    width="150"
-                    align="center"
-                >
+                <el-table-column prop="title" label="书名" width="150" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.goodName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="imgBigUrl"
-                    label="图片"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="imgBigUrl" label="图片" width="100" align="center">
                     <template v-slot="{ row }">
-                        <el-image
-                            style="width: 100px; height: 100px"
-                            :src="row.img"
-                        ></el-image>
+                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="authorname"
-                    label="价格"
-                    width="120"
-                    align="center"
-                >
+                <el-table-column prop="authorname" label="价格" width="120" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.price }}</el-tag>
                     </template>
                 </el-table-column>
                 <!-- 库存 -->
-                <el-table-column
-                    prop="stock"
-                    label="品相"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="stock" label="品相" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
                 </el-table-column>
                 <!-- 是否已经上传 -->
-                <el-table-column
-                    prop="isOnSale"
-                    label="是否已经上传"
-                    width="200"
-                    align="center"
-                >
+                <el-table-column prop="isOnSale" label="是否已经上传" width="200" align="center">
                     <template v-slot="{ row }">
-                        <el-tag v-if="!row.isOnSale" type="danger"
-                            >未上传</el-tag
-                        >
+                        <el-tag v-if="!row.isOnSale" type="danger">未上传</el-tag>
                         <el-tag v-else type="success">已上传</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="description"
-                    label="描述"
-                    width="400"
-                    align="center"
-                >
+                <el-table-column prop="description" label="描述" width="400" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.description }}</el-tag>
                     </template>
@@ -126,33 +74,18 @@
                 <!-- 操作 上传 -->
                 <el-table-column label="操作" width="200" align="center">
                     <template v-slot="{ row }">
-                        <el-button
-                            v-if="!row.isOnSale"
-                            type="primary"
-                            @click="handleUpload(row)"
-                            :disabled="myquotaleft < 1"
-                            >上传</el-button
-                        >
-                        <el-button v-else type="success" disabled plain
-                            >已上传</el-button
-                        >
+                        <el-button v-if="!row.isOnSale" type="primary" @click="handleUpload(row)"
+                            :disabled="myquotaleft < 1">上传</el-button>
+                        <el-button v-else type="success" disabled plain>已上传</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </el-col>
     </el-row>
     <el-row class="row-bg" justify="center" style="margin-top: 30px">
-        <el-pagination
-            v-model:current-page="currentPage1"
-            :page-size="100"
-            :size="size"
-            :disabled="disabled"
-            :background="background"
-            layout="total, prev, pager, next"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-        ></el-pagination>
+        <el-pagination v-model:current-page="currentPage1" :page-size="100" :size="size" :disabled="disabled"
+            :background="background" layout="total, prev, pager, next" :total="total" @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"></el-pagination>
     </el-row>
 </template>
 
@@ -244,6 +177,11 @@ watch(whetherall, (newVal) => {
             });
     }
 });
+
+const newsendall = async () => {
+    console.log("newsendall");
+    useTaskStore().newsendall();
+}
 
 const sendalltoback = async () => {
     let tasks = alldata.value.filter((item) => {
