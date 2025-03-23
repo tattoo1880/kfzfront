@@ -11,7 +11,16 @@
                 全部上传
             </el-button>
             <el-button type="success" plain @click="newsendall">
-                全部上传
+                每日任务
+            </el-button>
+            <el-button type="danger" plain @click="downall">
+                下架所有
+            </el-button>
+            <el-button type="warning" plain @click="deleteallweigui">
+                删除所有违规
+            </el-button>
+            <el-button type="primary" plain @click="deleteallinstock">
+                删除所有仓库中
             </el-button>
 
         </el-col>
@@ -223,6 +232,27 @@ const sendalltoback = async () => {
         ElLoading.service().close();
     }
 };
+
+const downall = async () => {
+
+
+    const res = await useTaskStore().downallgoods();
+    console.log(res);
+
+
+
+}
+
+const deleteallweigui = async () => {
+    const res = await useTaskStore().delteallweigui();
+    console.log(res);
+}
+
+const deleteallinstock = async () => {
+    const res = await useTaskStore().deleteallinstock();
+    console.log(res);
+}
+
 </script>
 
 <style lang="less" scoped></style>
