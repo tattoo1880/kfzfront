@@ -286,9 +286,38 @@ export const useTaskStore = defineStore('usertask', () => {
 
     }
 
-    
 
-    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods,delteallweigui, deleteallinstock}
+    const getonepageimageanddelete = async()=>{
+        console.log("=====", shopinfo.value)
+        const jwt = useTokenStore().getToken();
+        console.log(jwt)
+        console.log(useTokenStore().getInfo())
+        const uid = useTokenStore().getInfo().uid;
+        console.log(uid)
+
+        try {
+            const res = await axios.post(`${ApiUrl}/sdk/getonepageimageanddelete`,
+                {
+                    session: uid,
+                    usernick: shopinfo.value.shopName,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                })
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+            
+        }
+    }
+
+
+
+    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods,delteallweigui, deleteallinstock,getonepageimageanddelete}
 
 }
 )

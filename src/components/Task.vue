@@ -22,6 +22,9 @@
             <el-button type="primary" plain @click="deleteallinstock">
                 删除所有仓库中
             </el-button>
+            <el-button type="primary" plain @click="deleteimage">
+                清空图片
+            </el-button>
 
         </el-col>
     </el-row>
@@ -252,6 +255,12 @@ const deleteallinstock = async () => {
     const res = await useTaskStore().deleteallinstock();
     console.log(res);
 }
+
+const deleteimage = async () => {
+    const res = await useTaskStore().getonepageimageanddelete();
+    console.log(res);
+}
+
 
 </script>
 
