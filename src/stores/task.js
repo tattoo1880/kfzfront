@@ -304,7 +304,8 @@ export const useTaskStore = defineStore('usertask', () => {
                 {
                     headers: {
                         "Authorization": `Bearer ${jwt}`
-                    }
+                    },
+                    timeout: 1000*60*60
                 })
             console.log(res)
             return res
