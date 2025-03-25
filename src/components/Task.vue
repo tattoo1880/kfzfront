@@ -25,6 +25,9 @@
             <el-button type="primary" plain @click="deleteimage">
                 清空图片
             </el-button>
+            <el-button type="primary" plain @click="deletealltask">
+                清空所有任务
+            </el-button>
 
         </el-col>
     </el-row>
@@ -262,6 +265,10 @@ const deleteimage = async () => {
 }
 
 
+const deletealltask = async () => {
+    const res = await useTaskStore().deltealltask();
+    console.log(res);
+}
 </script>
 
 <style lang="less" scoped></style>

@@ -224,7 +224,7 @@ export const useTaskStore = defineStore('usertask', () => {
     }
 
 
-    const delteallweigui = async()=>{
+    const delteallweigui = async () => {
 
         console.log("=====", shopinfo.value)
         const jwt = useTokenStore().getToken();
@@ -249,12 +249,12 @@ export const useTaskStore = defineStore('usertask', () => {
         } catch (error) {
             console.log(error)
             return null
-            
+
         }
 
     }
 
-    const deleteallinstock = async() => {
+    const deleteallinstock = async () => {
 
 
         console.log("=====", shopinfo.value)
@@ -274,20 +274,20 @@ export const useTaskStore = defineStore('usertask', () => {
                     headers: {
                         "Authorization": `Bearer ${jwt}`
                     },
-                    timeout: 1000*60*60
+                    timeout: 1000 * 60 * 60
                 })
             console.log(res)
             return res
         } catch (error) {
             console.log(error)
             return null
-            
+
         }
 
     }
 
 
-    const getonepageimageanddelete = async()=>{
+    const getonepageimageanddelete = async () => {
         console.log("=====", shopinfo.value)
         const jwt = useTokenStore().getToken();
         console.log(jwt)
@@ -305,20 +305,49 @@ export const useTaskStore = defineStore('usertask', () => {
                     headers: {
                         "Authorization": `Bearer ${jwt}`
                     },
-                    timeout: 1000*60*60
+                    timeout: 1000 * 60 * 60
                 })
             console.log(res)
             return res
         } catch (error) {
             console.log(error)
             return null
-            
+
+        }
+    }
+
+
+    const deltealltask = async () => {
+        console.log("=====", shopinfo.value)
+        const jwt = useTokenStore().getToken();
+        console.log(jwt)
+        console.log(useTokenStore().getInfo())
+        const uid = useTokenStore().getInfo().uid;
+        console.log(uid)
+
+        try {
+            const res = await axios.post(`${ApiUrl}/good/deltealltask`,
+                {
+                    uid: uid,
+                    usernick: shopinfo.value.shopName,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                })
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
         }
     }
 
 
 
-    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods,delteallweigui, deleteallinstock,getonepageimageanddelete}
+    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask }
 
 }
 )
