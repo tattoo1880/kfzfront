@@ -27,7 +27,10 @@ export const useTaskStore = defineStore('usertask', () => {
                     }
                 }
             )
-            console.log(res)
+            shopinfo.value = res.data.shop
+
+
+
             return res
         } catch (error) {
             console.log(error)
@@ -86,7 +89,7 @@ export const useTaskStore = defineStore('usertask', () => {
             )
 
             // console.log(res)
-            shopinfo.value = res.data[0]["shop"]
+            // shopinfo.value = res.data[0]["shop"]
 
             return res
         } catch (e) {
@@ -346,8 +349,70 @@ export const useTaskStore = defineStore('usertask', () => {
     }
 
 
+    const deleteoldgoods = async () => {
+        console.log("=====", shopinfo.value)
+        const jwt = useTokenStore().getToken();
+        console.log(jwt)
+        console.log(useTokenStore().getInfo())
+        const uid = useTokenStore().getInfo().uid;
+        console.log(uid)
 
-    return { setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask }
+        try {
+            const res = await axios.post(`${ApiUrl}/sdk/newdeleteallgoods`,
+                {
+                    session: uid,
+                    usernick: shopinfo.value.shopName,
+                },
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                })
+            console.log(res)
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
+        }
+    }
+
+
+
+    const gettodaytaskinfo = async () => {
+        const jwt = useTokenStore().getToken();
+        console.log(jwt)
+        console.log(useTokenStore().getInfo())
+        const uid = useTokenStore().getInfo().uid;
+        console.log(uid)
+
+        try {
+            const res = await axios.post(`${ApiUrl}/good/gettodaytaskinfo`,
+                {
+                    uid: uid,
+                },
+
+
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwt}`
+                    }
+                })
+            return res
+        } catch (error) {
+            console.log(error)
+            return null
+
+        }
+    }
+
+
+
+
+
+
+
+    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo }
 
 }
 )

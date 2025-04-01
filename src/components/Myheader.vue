@@ -27,28 +27,28 @@
                     <strong>功能</strong>
                 </el-text>
             </template>
-            <el-menu-item index="2-1" @click="toscrapy">
-                <el-text style="color: #409eff">
+            <el-menu-item style="background-color: black;" index="2-1" @click="toscrapy">
+                <el-text style="color: #409eff;background-color: black;">
                     <strong>寻找货源(爬虫)</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item index="2-2" @click="totask">
+            <el-menu-item style="background-color: black;" index="2-2" @click="totask">
                 <el-text style="color: #409eff">
                     <strong>我的上传任务</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item index="2-3" @click="toprofile">
+            <el-menu-item style="background-color: black;" index="2-3" @click="toprofile">
                 <el-text style="color: #409eff">
                     <strong>我的信息</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item index="2-4" @click="tousershop">
+            <el-menu-item style="background-color: black;" index="2-4" @click="tousershop">
                 <el-text style="color: #409eff">
                     <strong>我的店铺</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
-            <el-menu-item index="2-3" @click="logout">
+            <el-menu-item style="background-color: black;" index="2-3" @click="logout">
                 <el-text style="color: #409eff">
                     <strong>登出</strong>
                 </el-text>
@@ -143,7 +143,31 @@ const tousershop = () => {
 </script>
 
 <style>
+.el-menu {
+    background-color: #494343;
+    border: none;
+}
+
+.el-menu-demo {
+    background-color: #494343;
+    border: none;
+}
+
+.ind {
+    background-color: #494343;
+    color: #409eff;
+    font-size: 20px;
+}
+
+.el-sub-menu {
+    background-color: #494343;
+    color: #409eff;
+    font-size: 20px;
+}
+
+
 .el-menu--horizontal>.el-menu-item:nth-child(1) {
+    background-color: #494343;
     margin-right: auto;
 }
 </style>

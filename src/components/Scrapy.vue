@@ -1,5 +1,5 @@
 <template>
-    <el-row class="row-bg" justify="end" style="margin-right: 20px">
+    <!-- <el-row class="row-bg" justify="end" style="margin-right: 20px">
         <el-affix position="top" :offset="120">
             <el-button
                 type="primary"
@@ -9,7 +9,7 @@
                 >添加至我的上传任务</el-button
             >
         </el-affix>
-    </el-row>
+    </el-row> -->
 
     <el-row class="bg-row" justify="center">
         <el-text>
@@ -32,17 +32,13 @@
                         </el-icon>
                     </el-button>
                 </template>
-            </el-input>
-        </div>
-    </el-row> -->
+</el-input>
+</div>
+</el-row> -->
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input
-                v-model="kw2"
-                style="max-width: 1600px; width: 800px"
-                placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
-                class="input-with-select"
-            >
+            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
+                class="input-with-select">
                 <template #append>
                     <el-button @click="handlesearch2">
                         <el-icon>
@@ -56,92 +52,44 @@
 
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table
-                :data="tabledata"
-                ref="multipleTableRef"
-                style="width: 100%; height: 70vh"
-                align="center"
-                @selection-change="handleSelectionChange"
-            >
+            <el-table :data="tabledata" ref="multipleTableRef" style="width: 100%; height: 70vh" align="center"
+                @selection-change="handleSelectionChange">
                 <!-- 单选 -->
-                <el-table-column
-                    type="selection"
-                    :selectable="selectable"
-                    width="55"
-                    align="center"
-                ></el-table-column>
-                <el-table-column
-                    type="index"
-                    label="序号"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
+                <el-table-column type="index" label="序号" width="100" align="center">
                     <template v-slot="scope">
                         <el-tag type="success">{{ scope.$index + 1 }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="id"
-                    label="ID"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="id" label="ID" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="书名"
-                    width="550"
-                    align="center"
-                >
+                <el-table-column prop="title" label="书名" width="550" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.goodName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
-                    prop="imgBig"
-                    label="图片"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="imgBig" label="图片" width="100" align="center">
                     <template v-slot="{ row }">
-                        <el-image
-                            style="width: 100px; height: 100px"
-                            :src="row.img"
-                        ></el-image>
+                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="authorname"
-                    label="描述"
-                    width="520"
-                    align="center"
-                >
+                <el-table-column prop="authorname" label="描述" width="520" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="price"
-                    label="价格"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="price" label="价格" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.price }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column
-                    prop="quality"
-                    label="品相"
-                    width="100"
-                    align="center"
-                >
+                <el-table-column prop="quality" label="品相" width="100" align="center">
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
@@ -149,7 +97,7 @@
             </el-table>
         </el-col>
     </el-row>
-    <el-row class="row-bg" justify="center">
+    <!-- <el-row class="row-bg" justify="center">
         <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -157,7 +105,7 @@
             layout="total, prev, pager, next"
             :total="totalnum"
         />
-    </el-row>
+    </el-row> -->
 </template>
 
 <script setup>
@@ -166,7 +114,7 @@ import { myfectch } from "@/utils/Myfetch";
 import { useTokenStore } from "@/stores/token";
 import { useTaskStore } from "@/stores/task";
 import { ElLoading, ElMessage } from "element-plus";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 const router = useRouter();
 
 const { getToken } = useTokenStore();

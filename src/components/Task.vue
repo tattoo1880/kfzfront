@@ -1,113 +1,136 @@
 <template>
-    <el-row class="row-bg" justify="end" style="margin-top: 30px">
-        <el-col :span="6">
-            <el-tag type="success" style="margin-right: 20px">剩余任务额度:{{ myquotaleft }}</el-tag>
-        </el-col>
-        <el-col :span="6">
-            <el-switch v-model="whetherall" size="large" active-text="已上传" inactive-text="未上传" />
-        </el-col>
-        <el-col :span="6">
-            <el-button type="primary" plain @click="sendalltoback">
-                全部上传
-            </el-button>
-            <el-button type="success" plain @click="newsendall">
-                每日任务
-            </el-button>
-            <el-button type="danger" plain @click="downall">
-                下架所有
-            </el-button>
-            <el-button type="warning" plain @click="deleteallweigui">
-                删除所有违规
-            </el-button>
-            <el-button type="primary" plain @click="deleteallinstock">
-                删除所有仓库中
-            </el-button>
-            <el-button type="primary" plain @click="deleteimage">
-                清空图片
-            </el-button>
-            <el-button type="primary" plain @click="deletealltask">
-                清空所有任务
-            </el-button>
+    <div class="common-layout">
+        <el-container>
+            <el-container>
+                <el-aside width="300px" class="aside"> <el-row class="row-bg" justify="end" style="margin-top: 30px">
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-tag type="success" style="margin-right: 20px">剩余任务额度:{{ myquotaleft }}</el-tag>
+                        </el-col>
 
-        </el-col>
-    </el-row>
 
-    <el-row class="row-bg" justify="center">
-        <el-text>
-            <h2 style="color: #409eff">我的任务</h2>
-        </el-text>
-    </el-row>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="success" plain @click="newsendall" :disabled="todayuploadcount >= 10000">
+                                今日任务
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="danger" plain @click="downall">
+                                下架所有
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="warning" plain @click="deleteallweigui">
+                                删除所有违规
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="primary" plain @click="deleteallinstock">
+                                删除所有仓库中
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="primary" plain @click="deleteimage">
+                                清空图片
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="primary" plain @click="deletealltask">
+                                清空所有任务
+                            </el-button>
+                        </el-col>
+                        <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                            <el-button type="primary" plain @click="deleteoldgoods">
+                                删除最早的 1w 条商品
+                            </el-button>
+                        </el-col>
 
-    <el-row class="row-bg" justify="center">
-        <el-col :span="24">
-            <el-table :data="tabledata" style="width: 100%; height: 70vh" align="center">
-                <!-- 2-11 加入index -->
+                    </el-row></el-aside>
+                <el-main class="aman">
 
-                <el-table-column type="index" label="序号" width="100" align="center">
-                    <template v-slot="scope">
-                        <el-tag type="success">{{ scope.$index + 1 }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="id" label="ID" width="100" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.uid }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="title" label="书名" width="150" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.goodName }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="imgBigUrl" label="图片" width="100" align="center">
-                    <template v-slot="{ row }">
-                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="authorname" label="价格" width="120" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.price }}</el-tag>
-                    </template>
-                </el-table-column>
-                <!-- 库存 -->
-                <el-table-column prop="stock" label="品相" width="100" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.quantity }}</el-tag>
-                    </template>
-                </el-table-column>
-                <!-- 是否已经上传 -->
-                <el-table-column prop="isOnSale" label="是否已经上传" width="200" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag v-if="!row.isOnSale" type="danger">未上传</el-tag>
-                        <el-tag v-else type="success">已上传</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="description" label="描述" width="400" align="center">
-                    <template v-slot="{ row }">
-                        <el-tag type="success">{{ row.description }}</el-tag>
-                    </template>
-                </el-table-column>
-                <!-- 操作 上传 -->
-                <el-table-column label="操作" width="200" align="center">
-                    <template v-slot="{ row }">
-                        <el-button v-if="!row.isOnSale" type="primary" @click="handleUpload(row)"
-                            :disabled="myquotaleft < 1">上传</el-button>
-                        <el-button v-else type="success" disabled plain>已上传</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-col>
-    </el-row>
-    <el-row class="row-bg" justify="center" style="margin-top: 30px">
-        <el-pagination v-model:current-page="currentPage1" :page-size="100" :size="size" :disabled="disabled"
-            :background="background" layout="total, prev, pager, next" :total="total" @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"></el-pagination>
-    </el-row>
+                    <el-row class="row-bg" justify="center">
+                        <el-text>
+                            <h2 style="color: #409eff">我的任务</h2>
+                        </el-text>
+                    </el-row>
+                    <el-row class="row-bg" justify="center">
+                        <el-col :span="12" style="margin-top: 40px;padding-left: 30px;height:90vh">
+                            <el-card style="width: 480px;height: 60vh;margin-top: 30px;" shadow="always" class="card">
+                                <el-row class="row-bg" justify="center">
+                                    <el-text type="primary">
+                                        <h2 style="color: #409eff">今日明细:</h2>
+                                    </el-text>
+                                </el-row>
+                                <el-row class='row-bg' justify='start'>
+                                    <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                                        <el-tag type="success" style="margin-right: 20px;height: 100px;width: 400px;">
+                                            <el-text>
+                                                <h2 style="color: #32CD32">今日上传任务数:{{ todayuploadcount }}</h2>
+                                            </el-text>
+                                        </el-tag>
+                                    </el-col>
+                                    <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                                        <el-tag type="primary" style="margin-right: 20px;height:100px;width:400px">
+                                            <el-text>
+                                                <h2 style="color: #409eff">数据库内未上传任务数:{{ nouploadcount }}</h2>
+                                            </el-text>
+                                        </el-tag>
+                                    </el-col>
+
+                                </el-row>
+                            </el-card>
+                        </el-col>
+                        <el-col :span="12" style="margin-top: 40px;padding-left: 30px;height:90vh">
+                            <el-card style="width: 480px;height: 60vh;margin-top: 30px;" shadow="always" class="card">
+                                <el-row class="row-bg" justify="center">
+                                    <el-text type="primary">
+                                        <h2 style="color: #409eff">店铺信息:</h2>
+                                    </el-text>
+                                </el-row>
+                                <el-row class='row-bg' justify='start'>
+                                    <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                                        <el-tag type="success" style="margin-right: 20px;height: 100px;width: 400px;">
+                                            <el-text>
+                                                <h2 style="color: #32CD32">店铺名称:{{ shopinfo1.shopName }}</h2>
+                                            </el-text>
+                                        </el-tag>
+                                    </el-col>
+                                    <el-col :span="24" style="margin-top: 40px;padding-left: 30px;">
+                                        <el-tag type="primary" style="margin-right: 20px;height:100px;width:400px">
+                                            <el-text>
+                                                <h2 style="color: #409eff">店铺ID:{{ shopinfo1.shopIp }}</h2>
+                                            </el-text>
+                                        </el-tag>
+                                    </el-col>
+
+                                </el-row>
+                            </el-card>
+
+                        </el-col>
+
+
+                    </el-row>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+
+
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, watch, computed } from "vue";
 import { useTaskStore } from "@/stores/task";
 import { ElLoading, ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const todayuploadcount = ref(0);
+const nouploadcount = ref(0);
+const shopinfo1 = ref({
+    shopName: "",
+    shopIp: "",
+});
+
 const tabledata = ref([]);
 const myquotaleft = ref(0);
 const alldata = ref([]);
@@ -140,17 +163,36 @@ const refresh = async () => {
 };
 
 onMounted(async () => {
-    const res = await useTaskStore().getTaskByUid();
-    const res2 = await useTaskStore().getmyallinfo();
-    //! 取分页数据给tabtledata
-    alldata.value = res.data;
-    total.value = res.data.length;
-    tabledata.value = alldata.value.slice(0, 100).filter((item) => {
-        return !item.isOnSale;
+    const elloading = ElLoading.service({
+        fullscreen: true,
+        text: "加载中，请稍后...",
     });
-    console.log(res.data);
-    console.log(res2.data);
-    myquotaleft.value = res2.data.userQuota.quotaLeft;
+    try {
+        // const res = await useTaskStore().getTaskByUid();
+        const res2 = await useTaskStore().getmyallinfo();
+
+        //! 取分页数据给tabtledata
+        // alldata.value = res.data;
+        // total.value = res.data.length;
+        // tabledata.value = alldata.value.filter(item =>{
+        //     return !item.isOnSale;
+        // }).slice((currentPage1.value - 1) * 100, currentPage1.value * 100);
+        const res = await useTaskStore().gettodaytaskinfo();
+        console.log(res);
+        todayuploadcount.value = res.data[0]
+        nouploadcount.value = res.data[1]
+
+        myquotaleft.value = res2.data.userQuota.quotaLeft;
+        shopinfo1.value.shopName = useTaskStore().shopinfo.shopName;
+        shopinfo1.value.shopIp = useTaskStore().shopinfo.shopIp;
+        elloading.close();
+    } catch (error) {
+        console.log(error);
+        ElMessage.error("加载失败");
+        elloading.close();
+    } finally {
+        elloading.close();
+    }
 });
 
 const handleUpload = async (row) => {
@@ -169,12 +211,21 @@ const handleDelete = async (row) => {
 };
 
 //监控myquotaleft,如果小于0,所有上传按钮不可用
-// watch(myquotaleft, (newVal) => {
-//     console.log(newVal);
-//     if (newVal <= 49990) {
-//         ElMessage.error("今日任务已完成");
-//     }
-// });
+watch(myquotaleft, (newVal) => {
+    console.log(newVal);
+    if (newVal <= 0) {
+        ElMessage.error("已无额度,请充值");
+        router.push({ name: "Profile" });
+    }
+});
+
+//!监控todayuploadcount,如果小于 10000,则弹出是否进行今日任务提示
+watch(todayuploadcount, (newVal) => {
+    console.log(newVal);
+    if (newVal < 10000) {
+        ElMessage.error("今日任务未完成，请尽快完成");
+    }
+});
 
 watch(whetherall, (newVal) => {
     console.log(newVal);
@@ -268,7 +319,30 @@ const deleteimage = async () => {
 const deletealltask = async () => {
     const res = await useTaskStore().deltealltask();
     console.log(res);
+
+
+}
+const deleteoldgoods = async () => {
+    const res = await useTaskStore().deleteoldgoods();
+    console.log(res);
 }
 </script>
 
-<style lang="less" scoped></style>
+
+<style scoped>
+aside {
+    background-color: #f5f5f5;
+    height: 90vh;
+}
+
+.card {
+    background-color: #f5f5f5;
+    border: 2px solid #c1c4c9;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 1, 0, 0.1);
+}
+
+.aman {
+    background-color: #F5FFFA;
+}
+</style>
