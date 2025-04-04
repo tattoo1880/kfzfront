@@ -344,12 +344,12 @@ const handlesearch2 = async () => {
     try {
         for (let item of list1) {
             //const res = await getallpage(item);
-            const res = await newgetallinfo(item);
-            totalnum.value = res.length / 10;
-            alldata.value = res;
-            tabledata.value = alldata.value.slice(0, 30);
-            eloading.close();
+            await newgetallinfo(item);
+            // totalnum.value = res.length / 10;
+            // alldata.value = res;
+            // tabledata.value = alldata.value.slice(0, 30);
         }
+        eloading.close();
         router.push({ name: "Task" });
     } catch (error) {
         ElMessage.error("获取数据失败");

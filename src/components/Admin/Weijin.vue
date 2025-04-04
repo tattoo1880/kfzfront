@@ -8,7 +8,7 @@
         <el-upload
             class="upload-demo"
             drag
-            action="http://127.0.0.1:8083/weijin/upload"
+            action="http://212.50.252.74:8083/weijin/upload"
             multiple
         >
             <el-icon class="el-icon--upload"><upload-filled /></el-icon>
