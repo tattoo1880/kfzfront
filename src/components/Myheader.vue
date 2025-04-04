@@ -29,7 +29,7 @@
             </template>
             <el-menu-item style="background-color: black;" index="2-1" @click="toscrapy">
                 <el-text style="color: #409eff;background-color: black;">
-                    <strong>寻找货源(爬虫)</strong>
+                    <strong>寻找货源</strong>
                 </el-text>
             </el-menu-item>
             <el-menu-item style="background-color: black;" index="2-2" @click="totask">

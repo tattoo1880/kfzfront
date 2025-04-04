@@ -245,8 +245,23 @@ watch(whetherall, (newVal) => {
 });
 
 const newsendall = async () => {
-    console.log("newsendall");
-    useTaskStore().newsendall();
+    try {
+        ElLoading.service({
+            fullscreen: true,
+            text: "上传中，请稍后...",
+        });
+
+        console.log("newsendall");
+        const res = await useTaskStore().newsendall();
+
+        
+    } catch (error) {
+        console.log(error);
+    } finally {
+        ElLoading.service().close();
+        
+    }
+
 }
 
 const sendalltoback = async () => {
