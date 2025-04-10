@@ -70,14 +70,15 @@
                                             type="primary"
                                             plain
                                             @click="login"
+                                            style="margin-left: 28px"
                                             >登录</el-button
                                         >
-                                        <el-button
+                                        <!-- <el-button
                                             type="primary"
                                             plain
                                             @click="toReg"
                                             >注册</el-button
-                                        >
+                                        > -->
                                     </el-row>
                                 </el-form-item>
                             </el-form>
