@@ -37,10 +37,27 @@
 </el-row> -->
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
+            <el-input v-model="kw3" style="max-width: 1600px; width: 800px" placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
                 class="input-with-select">
                 <template #append>
                     <el-button @click="handlesearch2">
+                        <el-icon>
+                            <Search />
+                        </el-icon>
+                    </el-button>
+                </template>
+            </el-input>
+        </div>
+    </el-row>
+
+    <hr/>
+
+    <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
+        <div class="mt-4">
+            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="请输入单一店铺id,并请确保已经在金钥匙上传过"
+                class="input-with-select">
+                <template #append>
+                    <el-button @click="handlesearch3">
                         <el-icon>
                             <Search />
                         </el-icon>
@@ -137,6 +154,7 @@ const handleCurrentChange = async (val) => {
 };
 
 const kw = ref("");
+const kw3 = ref("");
 
 const totalnum = ref(0);
 
@@ -358,12 +376,65 @@ const handlesearch2 = async () => {
         eloading.close();
     }
 };
+
+const handlesearch3 = async () => {
+
+    if (kw3.value === "") {
+        ElMessage.error("请输入店铺id");
+        return;
+    }
+    const eloading = ElLoading.service({
+        lock: true,
+        text: "正在获取数据",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+    });
+    try {
+        const res = await newgetkfzbidui(kw3.value);
+        console.log(res);
+        if (res.length === 0) {
+            ElMessage.error("没有找到该店铺的商品");
+            eloading.close();
+            return;
+        }
+    
+        eloading.close();
+        router.push({ name: "Task" });
+    } catch (error) {
+        console.error(error);
+        ElMessage.error("获取数据失败");
+    } finally {
+        eloading.close();
+    }
+}
+
+
+
 const alldata = ref([]);
 
 const newgetallinfo = async (kw) => {
     try {
         const res = await myfectch.post(
             "/api/newgetallinfo",
+            {
+                shopid: kw,
+                uid: useTokenStore().getInfo().uid,
+            },
+            {
+                timeout: 1000000,
+            }
+        );
+        console.log(res);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const newgetkfzbidui = async (kw) => {
+    try {
+        const res = await myfectch.post(
+            "/api/newgetkfzbidui",
             {
                 shopid: kw,
                 uid: useTokenStore().getInfo().uid,
