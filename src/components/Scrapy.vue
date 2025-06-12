@@ -54,7 +54,7 @@
 
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="请输入单一店铺id,并请确保已经在金钥匙上传过"
+            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条"
                 class="input-with-select">
                 <template #append>
                     <el-button @click="handlesearch3">
