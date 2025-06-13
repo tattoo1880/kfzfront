@@ -37,8 +37,12 @@
 </el-row> -->
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw3" style="max-width: 1600px; width: 800px" placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
-                class="input-with-select">
+            <el-input
+                v-model="kw2"
+                style="max-width: 1600px; width: 800px"
+                placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
+                class="input-with-select"
+            >
                 <template #append>
                     <el-button @click="handlesearch2">
                         <el-icon>
@@ -50,12 +54,16 @@
         </div>
     </el-row>
 
-    <hr/>
+    <hr />
 
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条"
-                class="input-with-select">
+            <el-input
+                v-model="kw3"
+                style="max-width: 1600px; width: 800px"
+                placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条"
+                class="input-with-select"
+            >
                 <template #append>
                     <el-button @click="handlesearch3">
                         <el-icon>
@@ -69,44 +77,92 @@
 
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table :data="tabledata" ref="multipleTableRef" style="width: 100%; height: 70vh" align="center"
-                @selection-change="handleSelectionChange">
+            <el-table
+                :data="tabledata"
+                ref="multipleTableRef"
+                style="width: 100%; height: 70vh"
+                align="center"
+                @selection-change="handleSelectionChange"
+            >
                 <!-- 单选 -->
-                <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
-                <el-table-column type="index" label="序号" width="100" align="center">
+                <el-table-column
+                    type="selection"
+                    :selectable="selectable"
+                    width="55"
+                    align="center"
+                ></el-table-column>
+                <el-table-column
+                    type="index"
+                    label="序号"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="scope">
                         <el-tag type="success">{{ scope.$index + 1 }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="id" label="ID" width="100" align="center">
+                <el-table-column
+                    prop="id"
+                    label="ID"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="书名" width="550" align="center">
+                <el-table-column
+                    prop="title"
+                    label="书名"
+                    width="550"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.goodName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="imgBig" label="图片" width="100" align="center">
+                <el-table-column
+                    prop="imgBig"
+                    label="图片"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
-                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
+                        <el-image
+                            style="width: 100px; height: 100px"
+                            :src="row.img"
+                        ></el-image>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="authorname" label="描述" width="520" align="center">
+                <el-table-column
+                    prop="authorname"
+                    label="描述"
+                    width="520"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="price" label="价格" width="100" align="center">
+                <el-table-column
+                    prop="price"
+                    label="价格"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.price }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="quality" label="品相" width="100" align="center">
+                <el-table-column
+                    prop="quality"
+                    label="品相"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
@@ -378,7 +434,6 @@ const handlesearch2 = async () => {
 };
 
 const handlesearch3 = async () => {
-
     if (kw3.value === "") {
         ElMessage.error("请输入店铺id");
         return;
@@ -392,23 +447,18 @@ const handlesearch3 = async () => {
     try {
         const res = await newgetkfzbidui(kw3.value);
         console.log(res);
-        if (res.length === 0) {
-            ElMessage.error("没有找到该店铺的商品");
-            eloading.close();
-            return;
+        if (res.data.length > 0) {
+            ElMessage.success("获取数据成功,获取到违规词" + res.data.length + "条");
+        }else {
+            ElMessage.success("获取数据成功,没有获取到违规词");
         }
-    
-        eloading.close();
-        router.push({ name: "Task" });
     } catch (error) {
         console.error(error);
         ElMessage.error("获取数据失败");
     } finally {
         eloading.close();
     }
-}
-
-
+};
 
 const alldata = ref([]);
 
@@ -443,8 +493,7 @@ const newgetkfzbidui = async (kw) => {
                 timeout: 1000000,
             }
         );
-        console.log(res);
-        return res.data;
+        return res;
     } catch (error) {
         console.log(error);
     }
