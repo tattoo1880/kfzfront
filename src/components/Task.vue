@@ -253,12 +253,15 @@ const newsendall = async () => {
 
         console.log("newsendall");
         const res = await useTaskStore().newsendall();
+        console.log(res);
 
         
     } catch (error) {
         console.log(error);
     } finally {
         ElLoading.service().close();
+        //! todo 刷新页面
+        window.location.reload();
         
     }
 
