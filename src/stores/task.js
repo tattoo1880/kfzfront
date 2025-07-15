@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useTokenStore } from './token'
 import ApiUrl from '@/utils/ApiUrl'
+import { ElLoading, ElMessage } from 'element-plus'
+import { fi } from 'element-plus/es/locale'
 export const useTaskStore = defineStore('usertask', () => {
 
 
@@ -206,6 +208,13 @@ export const useTaskStore = defineStore('usertask', () => {
         const uid = useTokenStore().getInfo().uid;
         console.log(uid)
 
+        const eloading = ElLoading.service({
+            lock: true,
+            text: "正在下架商品",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)",
+        });
+
         try {
             const res = await axios.post(`${ApiUrl}/sdk/downallgood`,
                 {
@@ -218,10 +227,16 @@ export const useTaskStore = defineStore('usertask', () => {
                     }
                 })
             console.log(res)
+            eloading.close()
+            ElMessage.success("下架商品成功")
             return res
         } catch (error) {
             console.log(error)
+            eloading.close()
+            ElMessage.error("下架商品失败")
             return null
+        }finally {
+            eloading.close()
         }
 
     }
@@ -357,6 +372,13 @@ export const useTaskStore = defineStore('usertask', () => {
         const uid = useTokenStore().getInfo().uid;
         console.log(uid)
 
+        const eloading = ElLoading.service({
+            lock: true,
+            text: "正在删除旧商品",
+            spinner: "el-icon-loading",
+            background: "rgba(0, 0, 0, 0.7)",
+        });
+
         try {
             const res = await axios.post(`${ApiUrl}/sdk/newdeleteallgoods`,
                 {
@@ -368,12 +390,17 @@ export const useTaskStore = defineStore('usertask', () => {
                         "Authorization": `Bearer ${jwt}`
                     }
                 })
-            console.log(res)
-            return res
-        } catch (error) {
+                eloading.close()
+                ElMessage.success("删除旧商品成功")
+                console.log(res)
+                return res
+            } catch (error) {
             console.log(error)
+            eloading.close()
+            ElMessage.error("删除旧商品失败")
             return null
-
+        } finally {
+            eloading.close()
         }
     }
 
