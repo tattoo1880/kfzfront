@@ -66,11 +66,6 @@ import srcImage from "@/assets/loginimage.jpeg";
 const { setToken, setInfo } = useTokenStore();
 
 const router = useRouter();
-
-// const srcImage = ref(
-//     "https://img.tusij.com/qiantu_assets/user_download_ue/2021-05-24/qt_7926a2b6a836b023b8a3459d721d76e2_23498.jpg%21w390?auth_key=1762387200-0-0-2f958e679ce44afdf4c5870d7192bdac"
-// );
-// const srcImage = ref(loginimage);
 const fit = ref("cover");
 
 const formLabelAlign = reactive({
