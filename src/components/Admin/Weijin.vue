@@ -8,7 +8,7 @@
         <el-upload
             class="upload-demo"
             drag
-            action="https://kfz.purecode.dpdns.org/weijin/upload"
+            action="https://ss.purecode.dpdns.org/weijin/upload"
             multiple
         >
             <el-icon class="el-icon--upload"><upload-filled /></el-icon>
