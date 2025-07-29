@@ -12,7 +12,7 @@ export const useWeijinStore = defineStore('useweijin', () => {
         console.log(jwt)
 
         try {
-            const res = await axios.get(`${ApiUrl}/weijin/clearweijin`,
+            const res = await axios.get(`${ApiUrl}/weijin/newweijinclear`,
                 {
                     headers: {
                         "Authorization": `Bearer ${jwt}`
