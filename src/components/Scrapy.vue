@@ -37,8 +37,12 @@
 </el-row> -->
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw2" style="max-width: 1600px; width: 800px" placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
-                class="input-with-select">
+            <el-input
+                v-model="kw2"
+                style="max-width: 1600px; width: 800px"
+                placeholder="请输入整体上传的店铺名，多店铺名以-分隔"
+                class="input-with-select"
+            >
                 <template #append>
                     <el-button @click="handlesearch2">
                         <el-icon>
@@ -54,8 +58,12 @@
 
     <el-row class="row-bg" justify="space-evenly" style="width: 100vw">
         <div class="mt-4">
-            <el-input v-model="kw3" style="max-width: 1600px; width: 800px"
-                placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条" class="input-with-select">
+            <el-input
+                v-model="kw3"
+                style="max-width: 1600px; width: 800px"
+                placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条"
+                class="input-with-select"
+            >
                 <template #append>
                     <el-button @click="handlesearch3">
                         <el-icon>
@@ -69,44 +77,92 @@
 
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table :data="tabledata" ref="multipleTableRef" style="width: 100%; height: 70vh" align="center"
-                @selection-change="handleSelectionChange">
+            <el-table
+                :data="tabledata"
+                ref="multipleTableRef"
+                style="width: 100%; height: 70vh"
+                align="center"
+                @selection-change="handleSelectionChange"
+            >
                 <!-- 单选 -->
-                <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
-                <el-table-column type="index" label="序号" width="100" align="center">
+                <el-table-column
+                    type="selection"
+                    :selectable="selectable"
+                    width="55"
+                    align="center"
+                ></el-table-column>
+                <el-table-column
+                    type="index"
+                    label="序号"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="scope">
                         <el-tag type="success">{{ scope.$index + 1 }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="id" label="ID" width="100" align="center">
+                <el-table-column
+                    prop="id"
+                    label="ID"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="title" label="书名" width="550" align="center">
+                <el-table-column
+                    prop="title"
+                    label="书名"
+                    width="550"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.goodName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="imgBig" label="图片" width="100" align="center">
+                <el-table-column
+                    prop="imgBig"
+                    label="图片"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
-                        <el-image style="width: 100px; height: 100px" :src="row.img"></el-image>
+                        <el-image
+                            style="width: 100px; height: 100px"
+                            :src="row.img"
+                        ></el-image>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="authorname" label="描述" width="520" align="center">
+                <el-table-column
+                    prop="authorname"
+                    label="描述"
+                    width="520"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="price" label="价格" width="100" align="center">
+                <el-table-column
+                    prop="price"
+                    label="价格"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.price }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column prop="quality" label="品相" width="100" align="center">
+                <el-table-column
+                    prop="quality"
+                    label="品相"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.quantity }}</el-tag>
                     </template>
@@ -124,14 +180,34 @@
         />
     </el-row> -->
 
-
     <!-- =========dialog ========= -->
-    <el-dialog v-model="showdialog" title="请选择自定义分组" width="500" :before-close="dialogclose">
-        <span>{{ kw2 }}</span>
+    <el-dialog
+        v-model="showdialog"
+        title="请选择自定义分组"
+        width="500"
+        :before-close="dialogclose"
+    >
+        <el-row class="row-bg" justify="center">
+            <el-col :span="24">
+                <el-select
+                    v-model="selectshopcid"
+                    placeholder="请选择分组"
+                    style="width: 100%"
+                >
+                    <el-option
+                        v-for="item in reslist"
+                        :key="item.cid"
+                        :label="item.name"
+                        :value="item.cid"
+                    ></el-option>
+                </el-select>
+            </el-col>
+        </el-row>
+
         <template #footer>
             <div class="dialog-footer">
                 <el-button @click="showdialog = false">取消</el-button>
-                <el-button type="primary" @click="showdialog = false">
+                <el-button type="primary" @click="startScrapy">
                     开始
                 </el-button>
             </div>
@@ -158,8 +234,6 @@ console.log(jwt);
 console.log("=========");
 const mytaskstatus = ref(false);
 // 分页
-
-
 
 const kw = ref("");
 const kw3 = ref("");
@@ -387,14 +461,11 @@ const getallpage = async (shopid) => {
 
 const showdialog = ref(false);
 
-
 const handlesearch2 = () => {
-
     showdialog.value = true;
     console.log(kw2.value);
-    console.log(reslist.value)
-
-}
+    console.log(reslist.value);
+};
 
 const handlesearch3 = async () => {
     if (kw3.value === "") {
@@ -411,7 +482,9 @@ const handlesearch3 = async () => {
         const res = await newgetkfzbidui(kw3.value);
         console.log(res);
         if (res.data.length > 0) {
-            ElMessage.success("获取数据成功,获取到违规词" + res.data.length + "条");
+            ElMessage.success(
+                "获取数据成功,获取到违规词" + res.data.length + "条"
+            );
         } else {
             ElMessage.success("获取数据成功,没有获取到违规词");
         }
@@ -463,7 +536,6 @@ const newgetkfzbidui = async (kw) => {
     }
 };
 
-
 const reslist = ref([]);
 const selectshopcid = ref("");
 
@@ -487,6 +559,44 @@ onMounted(async () => {
     }
 });
 
+const startScrapy = async () => {
+    console.log("开始抓取");
+    console.log(kw2.value);
+    console.log(selectshopcid.value);
+
+    if (kw2.value === "" || selectshopcid.value === "") {
+        ElMessage.error("请填写店铺名和选择分组");
+        return;
+    }
+
+    const eloading = ElLoading.service({
+        lock: true,
+        text: "正在获取数据",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+    });
+    try {
+        const res = await newgetallinfo(kw2.value);
+        console.log(res);
+        eloading.close();
+        ElMessage.success("获取数据成功");
+        router.push({ name: "Task" });
+    } catch (error) {
+        console.error(error);
+        ElMessage.error("获取数据失败");
+        eloading.close();
+    } finally {
+        eloading.close();
+    }
+    ElMessage.success("抓取任务已开始，请稍后查看任务列表");
+};
+
+const dialogclose = () => {
+    showdialog.value = false;
+    selectshopcid.value = "";
+    reslist.value = [];
+    console.log("关闭对话框");
+};
 </script>
 
 <style lang="less" scoped></style>

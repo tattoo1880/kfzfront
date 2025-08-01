@@ -7,20 +7,28 @@ import ApiUrl from '@/utils/ApiUrl'
 
 export const useCartsStore = defineStore('usecarts', () => {
 
-    const uid = useTokenStore().getInfo().uid
-    const jwt = useTokenStore().getToken()
 
     const carts = ref([])
 
 
     const getCartsByUid = async () => {
+        console.log('useCartsStore')
+
+        const uid = useTokenStore().getInfo().uid
+        const jwt = useTokenStore().getToken()
+
+        console.log('useCartsStore')
+
+        console.log('uid', uid)
+        console.log('jwt', jwt)
         const res = await useTbSdkstore().getshopbyuid()
-        const shopname = res.data.shopname
+        console.log('res', res)
+        const shopname = res.data.shopName
         try {
             const response = await axios.post(`${ApiUrl}/carts/getcarts`,
                 {
-                    session: uid,
-                    nickname: shopname
+                    uid: uid,
+                    shopname: shopname
                 },
                 {
                     headers: {
@@ -38,8 +46,32 @@ export const useCartsStore = defineStore('usecarts', () => {
     }
 
 
+    const deleteCartById = async (cartId) => {
+        const jwt = useTokenStore().getToken()
+        const uid = useTokenStore().getInfo().uid
+        const res = await useTbSdkstore().getshopbyuid()
+        console.log('res', res)
+        const shopname = res.data.shopName
 
-    return { carts, getCartsByUid }
+        try {
+            const response = await axios.post(`${ApiUrl}/sdk/deleteoldgoodsbycid`, {
+                session: uid,
+                usernick: shopname,
+                cid: cartId
+            }, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            })
+            console.log('deleteCartById response', response)
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    return { carts, getCartsByUid, deleteCartById }
 
 
 
