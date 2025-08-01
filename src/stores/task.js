@@ -350,7 +350,8 @@ export const useTaskStore = defineStore('usertask', () => {
                 },
                 {
                     headers: {
-                        "Authorization": `Bearer ${jwt}`
+                        "Authorization": `Bearer ${jwt}`,
+                        "Content-Type": "application/json"
                     }
                 })
             console.log(res)
@@ -386,7 +387,11 @@ export const useTaskStore = defineStore('usertask', () => {
                 },
                 {
                     headers: {
-                        "Authorization": `Bearer ${jwt}`
+                        "Authorization": `Bearer ${jwt}`,
+                        'Content-Type': 'application/json',
+
+
+                        
                     }
                 })
                 eloading.close()
