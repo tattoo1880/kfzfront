@@ -467,13 +467,24 @@ const newgetallinfonew = async (kw) => {
         kwlist.push(kw);
     }
     console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    console.log(selectshopcid.value)
+    const shop_cid_str = selectshopcid.value.toString()
     try {
         const res = await axios.post(
-            "http://127.0.0.1:8080/good/make",
+            "http://127.0.0.1:8080/good/makedd",
             {
                 shop_id: kwlist,
                 user_id: useTokenStore().getInfo().uid,
-                shop_cid: selectshopcid.value,
+                shop_cid: shop_cid_str,
             },
             {
                 timeout: 1000000,
@@ -581,7 +592,7 @@ const newstartScrapy = async () => {
         const res = await newgetallinfonew(kw3.value);
         console.log(res);
         eloading.close();
-        ElMessage.success("获取数据成功");
+        ElMessage.success("获取数据成功,,将要创建" + res.good_num + "条商品");
         router.push({ name: "Task" });
     } catch (error) {
         console.error(error);
