@@ -487,7 +487,7 @@ const newgetallinfonew = async (kw) => {
                 shop_cid: shop_cid_str,
             },
             {
-                timeout: 1000000,
+                timeout: 0,
             }
         );
         console.log(res);
@@ -562,9 +562,10 @@ const startScrapy = async () => {
         router.push({ name: "Task" });
     } catch (error) {
         console.error(error);
-        ElMessage.error("获取数据失败");
+
         eloading.close();
     } finally {
+        ElMessage.error("获取数据失败");
         eloading.close();
     }
     ElMessage.success("抓取任务已开始，请稍后查看任务列表");
@@ -591,14 +592,43 @@ const newstartScrapy = async () => {
     try {
         const res = await newgetallinfonew(kw3.value);
         console.log(res);
+        if (res.code !== 200) {
+            throw new Error("获取数据失败");
+        }
         eloading.close();
-        ElMessage.success("获取数据成功,,将要创建" + res.good_num + "条商品");
+        ElMessage.success("获取数据成功");
         router.push({ name: "Task" });
     } catch (error) {
+
+        await new Promise((resolve) => setTimeout(resolve, 15000));
+
+        const nosendtasknum = await useTaskStore().gettodaytaskinfo();
+        console.log(nosendtasknum);
+        console.log(nosendtasknum.data[1]);
+        //! 循环10 次
+        for (let i = 0; i < 10; i++) {
+            await new Promise((resolve) => setTimeout(resolve, 30000));
+
+            const res = await useTaskStore().gettodaytaskinfo();
+            const resdataqty = res.data[1]
+            console.log(resdataqty);
+            if (resdataqty > nosendtasknum.data[1]) {
+                ElMessage.success("获取数据成功");
+                router.push({ name: "Task" });
+                break;
+            } else {
+                continue;
+            }
+        }
+
         console.error(error);
         ElMessage.error("获取数据失败");
         eloading.close();
+
+
+
     } finally {
+        // ElMessage.error("获取数据失败");
         eloading.close();
     }
     ElMessage.success("抓取任务已开始，请稍后查看任务列表");
