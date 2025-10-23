@@ -68,6 +68,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useTokenStore } from "@/stores/token";
 import { myfectch } from "@/utils/Myfetch";
+import { fi } from "element-plus/es/locale/index.mjs";
 
 const usetoken = useTokenStore();
 
@@ -121,6 +122,8 @@ const logout = async () => {
         // router.push({ name: "login" });
     } catch (error) {
         console.error(error);
+    } finally {
+        router.push({ name: "login" });
     }
 };
 
@@ -144,30 +147,30 @@ const tousershop = () => {
 
 <style>
 .el-menu {
-    background-color: #494343;
+    background-color: #0d0d0d;
     border: none;
 }
 
 .el-menu-demo {
-    background-color: #494343;
+    background-color: #0d0d0d;
     border: none;
 }
 
 .ind {
-    background-color: #494343;
+    background-color: #0d0d0d;
     color: #409eff;
     font-size: 20px;
 }
 
 .el-sub-menu {
-    background-color: #494343;
+    background-color: #0d0d0d;
     color: #409eff;
     font-size: 20px;
 }
 
 
 .el-menu--horizontal>.el-menu-item:nth-child(1) {
-    background-color: #494343;
+    background-color: #111010;
     margin-right: auto;
 }
 </style>

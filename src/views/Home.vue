@@ -5,9 +5,9 @@
     <div>
         <RouterView />
     </div>
-    <el-divider>
+    <!-- <el-divider>
         <el-icon><star-filled color="#409EFF" /></el-icon>
-    </el-divider>
+    </el-divider> -->
 </template>
 
 <script setup>

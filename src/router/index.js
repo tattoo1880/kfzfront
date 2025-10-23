@@ -86,28 +86,28 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
 
-  console.log("luyoiluyoi")
+//   console.log("luyoiluyoi")
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log("!!!!!!!!")
-    console.log("!!!!!!!!")
-    console.log("!!!!!!!!")
-    console.log("!!!!!!!!")
-    const tokenStore = useTokenStore()
-    console.log(tokenStore.getInfo().isActived)
-    if (!tokenStore.getInfo().isActived) {
-      ElMessage.error('您的账号未激活')
-      next({
-        name: 'login',
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     console.log("!!!!!!!!")
+//     console.log("!!!!!!!!")
+//     console.log("!!!!!!!!")
+//     console.log("!!!!!!!!")
+//     const tokenStore = useTokenStore()
+//     console.log(tokenStore.getInfo().isActived)
+//     if (!tokenStore.getInfo().isActived) {
+//       ElMessage.error('您的账号未激活')
+//       next({
+//         name: 'login',
+//       })
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

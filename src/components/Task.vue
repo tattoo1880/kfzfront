@@ -3,115 +3,52 @@
         <el-container>
             <el-container>
                 <el-aside width="300px" class="aside">
-                    <el-row
-                        class="row-bg"
-                        justify="end"
-                        style="margin-top: 30px"
-                    >
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-tag type="success" style="margin-right: 20px"
-                                >剩余任务额度:{{ myquotaleft }}</el-tag
-                            >
+                    <el-row class="row-bg" justify="end" style="margin-top: 30px">
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-tag type="success" style="margin-right: 20px">剩余任务额度:{{ myquotaleft }}</el-tag>
                         </el-col>
 
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="success"
-                                plain
-                                @click="newsendall"
-                                :disabled="todayuploadcount >= 10000"
-                            >
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="success" plain @click="newsendall" :disabled="todayuploadcount >= 10000">
                                 今日任务
                             </el-button>
                         </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
+                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
                             <el-button type="danger" plain @click="downall">
                                 下架所有
                             </el-button>
-                        </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="warning"
-                                plain
-                                @click="deleteallweigui"
-                            >
+                        </el-col> -->
+                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="warning" plain @click="deleteallweigui">
                                 删除所有违规
                             </el-button>
-                        </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="primary"
-                                plain
-                                @click="deleteallinstock"
-                            >
+                        </el-col> -->
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="deleteallinstock">
                                 删除所有仓库中
                             </el-button>
                         </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="primary"
-                                plain
-                                @click="deleteimage"
-                            >
+                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="deleteimage">
                                 清空图片
                             </el-button>
-                        </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="primary"
-                                plain
-                                @click="deletealltask"
-                            >
+                        </el-col> -->
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="deletealltask">
                                 清空所有任务
                             </el-button>
                         </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="primary"
-                                plain
-                                @click="deleteitembygroup"
-                            >
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="deleteitembygroup">
                                 清空所选分组商品
                             </el-button>
                         </el-col>
-                        <el-col
-                            :span="24"
-                            style="margin-top: 40px; padding-left: 30px"
-                        >
-                            <el-button
-                                type="primary"
-                                plain
-                                @click="deleteoldgoods"
-                            >
+                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="deleteoldgoods">
                                 删除最早的 1w 条商品
                             </el-button>
-                        </el-col>
-                    </el-row></el-aside
-                >
+                        </el-col> -->
+                    </el-row></el-aside>
                 <el-main class="aman">
                     <el-row class="row-bg" justify="center">
                         <el-text>
@@ -119,23 +56,16 @@
                         </el-text>
                     </el-row>
                     <el-row class="row-bg" justify="center">
-                        <el-col
-                            :span="12"
-                            style="
+                        <el-col :span="12" style="
                                 margin-top: 40px;
                                 padding-left: 30px;
                                 height: 90vh;
-                            "
-                        >
-                            <el-card
-                                style="
+                            ">
+                            <el-card style="
                                     width: 480px;
                                     height: 60vh;
                                     margin-top: 30px;
-                                "
-                                shadow="always"
-                                class="card"
-                            >
+                                " shadow="always" class="card">
                                 <el-row class="row-bg" justify="center">
                                     <el-text type="primary">
                                         <h2 style="color: #409eff">
@@ -144,21 +74,15 @@
                                     </el-text>
                                 </el-row>
                                 <el-row class="row-bg" justify="start">
-                                    <el-col
-                                        :span="24"
-                                        style="
+                                    <el-col :span="24" style="
                                             margin-top: 40px;
                                             padding-left: 30px;
-                                        "
-                                    >
-                                        <el-tag
-                                            type="success"
-                                            style="
+                                        ">
+                                        <el-tag type="success" style="
                                                 margin-right: 20px;
                                                 height: 100px;
                                                 width: 400px;
-                                            "
-                                        >
+                                            ">
                                             <el-text>
                                                 <h2 style="color: #32cd32">
                                                     今日上传任务数:{{
@@ -168,21 +92,15 @@
                                             </el-text>
                                         </el-tag>
                                     </el-col>
-                                    <el-col
-                                        :span="24"
-                                        style="
+                                    <el-col :span="24" style="
                                             margin-top: 40px;
                                             padding-left: 30px;
-                                        "
-                                    >
-                                        <el-tag
-                                            type="primary"
-                                            style="
+                                        ">
+                                        <el-tag type="primary" style="
                                                 margin-right: 20px;
                                                 height: 100px;
                                                 width: 400px;
-                                            "
-                                        >
+                                            ">
                                             <el-text>
                                                 <h2 style="color: #409eff">
                                                     数据库内未上传任务数:{{
@@ -195,23 +113,16 @@
                                 </el-row>
                             </el-card>
                         </el-col>
-                        <el-col
-                            :span="12"
-                            style="
+                        <el-col :span="12" style="
                                 margin-top: 40px;
                                 padding-left: 30px;
                                 height: 90vh;
-                            "
-                        >
-                            <el-card
-                                style="
+                            ">
+                            <el-card style="
                                     width: 480px;
                                     height: 60vh;
                                     margin-top: 30px;
-                                "
-                                shadow="always"
-                                class="card"
-                            >
+                                " shadow="always" class="card">
                                 <el-row class="row-bg" justify="center">
                                     <el-text type="primary">
                                         <h2 style="color: #409eff">
@@ -220,21 +131,15 @@
                                     </el-text>
                                 </el-row>
                                 <el-row class="row-bg" justify="start">
-                                    <el-col
-                                        :span="24"
-                                        style="
+                                    <el-col :span="24" style="
                                             margin-top: 40px;
                                             padding-left: 30px;
-                                        "
-                                    >
-                                        <el-tag
-                                            type="success"
-                                            style="
+                                        ">
+                                        <el-tag type="success" style="
                                                 margin-right: 20px;
                                                 height: 100px;
                                                 width: 400px;
-                                            "
-                                        >
+                                            ">
                                             <el-text>
                                                 <h2 style="color: #32cd32">
                                                     店铺名称:{{
@@ -244,21 +149,15 @@
                                             </el-text>
                                         </el-tag>
                                     </el-col>
-                                    <el-col
-                                        :span="24"
-                                        style="
+                                    <el-col :span="24" style="
                                             margin-top: 40px;
                                             padding-left: 30px;
-                                        "
-                                    >
-                                        <el-tag
-                                            type="primary"
-                                            style="
+                                        ">
+                                        <el-tag type="primary" style="
                                                 margin-right: 20px;
                                                 height: 100px;
                                                 width: 400px;
-                                            "
-                                        >
+                                            ">
                                             <el-text>
                                                 <h2 style="color: #409eff">
                                                     店铺ID:{{
@@ -278,25 +177,11 @@
     </div>
 
     <!-- =========dialog ========= -->
-    <el-dialog
-        v-model="showdialog"
-        title="请选择自定义分组"
-        width="500"
-        :before-close="dialogclose"
-    >
+    <el-dialog v-model="showdialog" title="请选择自定义分组" width="500" :before-close="dialogclose">
         <el-row class="row-bg" justify="center">
             <el-col :span="24">
-                <el-select
-                    v-model="selectshopcid"
-                    placeholder="请选择分组"
-                    style="width: 100%"
-                >
-                    <el-option
-                        v-for="item in reslist"
-                        :key="item.cid"
-                        :label="item.name"
-                        :value="item.cid"
-                    ></el-option>
+                <el-select v-model="selectshopcid" placeholder="请选择分组" style="width: 100%">
+                    <el-option v-for="item in reslist" :key="item.cid" :label="item.name" :value="item.cid"></el-option>
                 </el-select>
             </el-col>
         </el-row>
@@ -575,18 +460,18 @@ const dialogclose = () => {
 
 <style scoped>
 aside {
-    background-color: #f5f5f5;
+    background-color: #0d0d0d;
     height: 90vh;
 }
 
 .card {
-    background-color: #f5f5f5;
-    border: 2px solid #c1c4c9;
+    background-color: #0d0d0d;
+    border: 2px solid #2d304f;
     border-radius: 10px;
     box-shadow: 10px 10px 10px rgba(0, 1, 0, 0.1);
 }
 
 .aman {
-    background-color: #f5fffa;
+    background-color: #0d0d0d;
 }
 </style>
