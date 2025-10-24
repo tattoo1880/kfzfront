@@ -158,7 +158,8 @@ const newgetallinfonew = async (kw) => {
     const shop_cid_str = selectshopcid.value.toString()
     try {
         const res = await axios.post(
-            "https://ss.purecode.dpdns.org/gogood/makedd",
+            // "https://ss.purecode.dpdns.org/gogood/makedd",
+            "http://127.0.0.1:8080/gogood/make",
             {
                 shop_id: kwlist,
                 user_id: useTokenStore().getInfo().uid,

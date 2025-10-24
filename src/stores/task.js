@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useTokenStore } from './token'
 import ApiUrl from '@/utils/ApiUrl'
+import GoGinApiUrl from '@/utils/GoGinApiUrl'
 import { ElLoading, ElMessage } from 'element-plus'
 export const useTaskStore = defineStore('usertask', () => {
 
@@ -440,7 +441,7 @@ export const useTaskStore = defineStore('usertask', () => {
 
     const taskcache = async () => {
         try {
-            const res = await axios.get(`${ApiUrl}/gogood/taskcache`)
+            const res = await axios.get(`${GoGinApiUrl}/gogood/taskcache`)
             console.log(res)
             console.log(res)
             console.log(res)

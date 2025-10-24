@@ -4,6 +4,8 @@ import { useTokenStore } from './token'
 import { useTbSdkstore } from './tbsdk'
 import axios from 'axios'
 import ApiUrl from '@/utils/ApiUrl'
+import GoGinApiUrl from '@/utils/GoGinApiUrl'
+import { ElMessage } from 'element-plus'
 
 export const useCartsStore = defineStore('usecarts', () => {
 
@@ -71,7 +73,37 @@ export const useCartsStore = defineStore('usecarts', () => {
     }
 
 
-    return { carts, getCartsByUid, deleteCartById }
+    const newdeleteCartById = async (cartIds) => {
+        const jwt = useTokenStore().getToken()
+        const uid = useTokenStore().getInfo().uid
+        const res = await useTbSdkstore().getshopbyuid()
+        console.log('res', res)
+        const shopname = res.data.shopName
+
+        try {
+            const response = await axios.post(`${GoGinApiUrl}/carts/deletebycids`, {
+                session: uid,
+                usernick: shopname,
+                cids: cartIds
+            }, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            })
+            console.log('newdeleteCartById response', response)
+
+            if (response.data.message =="DeleteByIds called"){
+                ElMessage.success("删除成功")
+            }
+            return response.data
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    return { carts, getCartsByUid, deleteCartById, newdeleteCartById }
 
 
 
