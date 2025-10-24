@@ -9,7 +9,7 @@
                         </el-col>
 
                         <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
-                            <el-button type="success" plain @click="newsendall" :disabled="todayuploadcount >= 10000">
+                            <el-button type="success" plain @click="taskcache" :disabled="todayuploadcount >= 10000">
                                 今日任务
                             </el-button>
                         </el-col>
@@ -456,6 +456,18 @@ const dialogclose = () => {
     showdialog.value = false;
     selectshopcid.value = "";
 };
+
+
+
+
+
+const taskcache = async () => {
+
+    await useTaskStore().taskcache();
+};
+
+
+
 </script>
 
 <style scoped>

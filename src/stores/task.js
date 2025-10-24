@@ -438,12 +438,25 @@ export const useTaskStore = defineStore('usertask', () => {
     }
 
 
+    const taskcache = async () => {
+        try {
+            const res = await axios.get(`${ApiUrl}/gogood/taskcache`)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
 
 
 
 
-
-    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo }
+    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo, taskcache}
 
 }
 )
