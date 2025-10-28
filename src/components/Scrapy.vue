@@ -169,8 +169,10 @@ const newgetallinfonew = async (kw) => {
                 timeout: 0,
             }
         );
+        console.log("========newgetallinfonew 返回数据=========");
         console.log(res);
-        return res.data;
+        console.log("========newgetallinfonew 返回数据=========");
+        return res
     } catch (error) {
         console.log(error);
     }
@@ -221,7 +223,13 @@ const newstartScrapy = async () => {
     try {
         const res = await newgetallinfonew(kw3.value);
         console.log(res);
-        if (res.code !== 200) {
+        if (res.status !== 200) {
+            throw new Error("获取数据失败");
+        }
+        if (res.data.message == "Goods created successfully") {
+            ElMessage.success("获取数据成功");
+            router.push({ name: "Task" });
+        } else {
             throw new Error("获取数据失败");
         }
         eloading.close();
@@ -259,6 +267,7 @@ const newstartScrapy = async () => {
     } finally {
         // ElMessage.error("获取数据失败");
         eloading.close();
+        router.push({ name: "Task" });
     }
     ElMessage.success("抓取任务已开始，请稍后查看任务列表");
 };

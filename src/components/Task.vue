@@ -30,11 +30,11 @@
                                 今日任务
                             </el-button>
                         </el-col>
-                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
-                            <el-button type="danger" plain @click="downall">
-                                下架所有
+                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                            <el-button type="primary" plain @click="downall">
+                                清空缓存中任务
                             </el-button>
-                        </el-col> -->
+                        </el-col>
                         <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
                             <el-button type="warning" plain @click="deleteallweigui">
                                 删除所有违规
@@ -512,6 +512,9 @@ const sendalltoback = async () => {
 const downall = async () => {
     const res = await useTaskStore().downallgoods();
     console.log(res);
+    console.log(res);
+    console.log(res);
+    console.log(res);
 };
 
 const deleteallweigui = async () => {
@@ -532,6 +535,9 @@ const deleteimage = async () => {
 const deletealltask = async () => {
     const res = await useTaskStore().deltealltask();
     console.log(res);
+    //! todo 刷新页面
+    window.location.reload();
+    ElMessage.success("清空所有任务成功");
 };
 const deleteoldgoods = async () => {
     const res = await useTaskStore().deleteoldgoods();
@@ -577,7 +583,9 @@ const dialogclose = () => {
 };
 
 const taskcache = async () => {
-    await useTaskStore().taskcache();
+    const res = await useTaskStore().taskcache();
+    console.log(res);
+    ElMessage.success("今日任务添加成功");
 };
 </script>
 

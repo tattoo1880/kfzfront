@@ -81,7 +81,7 @@ export const useCartsStore = defineStore('usecarts', () => {
         const shopname = res.data.shopName
 
         try {
-            const response = await axios.post(`${GoGinApiUrl}/carts/deletebycids`, {
+            const response = await axios.post(`${GoGinApiUrl}/newcarts/deletebycids`, {
                 session: uid,
                 usernick: shopname,
                 cids: cartIds
