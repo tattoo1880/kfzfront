@@ -93,6 +93,7 @@ import Usersiderbar from "@/components/Usersiderbar.vue";
 
 
 import axios from "axios";
+import GoGinApiUrl from "@/utils/GoGinApiUrl";
 const router = useRouter();
 
 const { getToken } = useTokenStore();
@@ -159,7 +160,7 @@ const newgetallinfonew = async (kw) => {
     try {
         const res = await axios.post(
             // "https://ss.purecode.dpdns.org/gogood/makedd",
-            "http://127.0.0.1:8080/gogood/make",
+            `${GoGinApiUrl}/gogood/make`,
             {
                 shop_id: kwlist,
                 user_id: useTokenStore().getInfo().uid,

@@ -144,8 +144,8 @@ const closeDescImgDialog = () => {
     showDescImgDialog.value = false;
 };
 
-const uploadurl = "http://127.0.0.1:8080/descimg/create";
-const uploadwaterurl = "http://127.0.0.1:8080/waterimg/create";
+const uploadurl = "https://ss.purecode.dpdns.org/descimg/create";
+const uploadwaterurl = "https://ss.purecode.dpdns.org/waterimg/create";
 
 const isDesImgOK = (file: File) => {
     //! 初始化 extraData
