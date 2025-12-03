@@ -466,15 +466,55 @@ export const useTaskStore = defineStore('usertask', () => {
 
 
     const taskcache = async () => {
+
+
+        //todo post taskcache 包含uid
+        const uid = useTokenStore().getInfo().uid;
+
+        //todo 先获取是否锁上了
         try {
-            const res = await axios.get(`${GoGinApiUrl}/gogood/taskcache`)
+            const res = await axios.post(`${GoGinApiUrl}/gogood/islocked`, {
+                uid: uid
+            })
             console.log(res)
+            if (res.data.isLocked) {
+                ElMessage.error("当前有任务正在进行中，请稍后再试")
+                return
+            }
+            if (!res.data.isLocked) {
+                try {
+                    const res = await axios.post(`${GoGinApiUrl}/gogood/taskcache`, {
+                        uid: uid
+                    })
+                    console.log(res)
+
+                    ElMessage.success("添加任务成功")
+                    return res
+                } catch (error) {
+                    console.log(error)
+                    return null
+                }
+            }
+        } catch (error) {
+            console.log(error)
+            return
+        }
+
+
+
+
+    }
+
+
+    const isLocked = async () => {
+        const uid = useTokenStore().getInfo().uid;
+
+        try {
+            const res = await axios.post(`${GoGinApiUrl}/gogood/islocked`, {
+                uid: uid
+            })
             console.log(res)
-            console.log(res)
-            console.log(res)
-            console.log(res)
-            console.log(res)
-            return res
+            return res.data.isLocked
         } catch (error) {
             console.log(error)
             return null
@@ -484,7 +524,7 @@ export const useTaskStore = defineStore('usertask', () => {
 
 
 
-    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo, taskcache }
+    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo, taskcache,isLocked }
 
 }
 )

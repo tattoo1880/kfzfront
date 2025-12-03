@@ -30,7 +30,10 @@
                                 今日任务
                             </el-button>
                         </el-col>
-                        <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
+                        <el-col
+                            :span="24"
+                            style="margin-top: 40px; padding-left: 30px"
+                        >
                             <el-button type="primary" plain @click="downall">
                                 清空缓存中任务
                             </el-button>
@@ -583,10 +586,44 @@ const dialogclose = () => {
 };
 
 const taskcache = async () => {
-    const res = await useTaskStore().taskcache();
-    console.log(res);
-    ElMessage.success("今日任务添加成功");
+    isopenmask.value = true;
+    await useTaskStore().taskcache();
 };
+
+//! 三十秒访问一下islocked接口
+
+const isopenmask = ref(false);
+let loadingInstance = null;
+
+// 监听 isopenmask 的变化
+watch(isopenmask, (newVal) => {
+    if (newVal) {
+        // 打开 loading，如果未打开
+        if (!loadingInstance) {
+            loadingInstance = ElLoading.service({ text: "执行任务中..." });
+        }
+    } else {
+        // 关闭 loading，如果已打开
+        if (loadingInstance) {
+            loadingInstance.close();
+            loadingInstance = null;
+        }
+    }
+});
+
+const isLocked = async () => {
+    setInterval(async () => {
+        try {
+            const res = await useTaskStore().isLocked();
+            console.log("isLocked", res);
+            isopenmask.value = res;
+        } catch (error) {
+            console.log(error);
+        }
+    }, 10000);
+};
+
+isLocked();
 </script>
 
 <style scoped>
