@@ -368,11 +368,19 @@ export const useTaskStore = defineStore('usertask', () => {
         console.log(useTokenStore().getInfo())
         const uid = useTokenStore().getInfo().uid;
         console.log(uid)
+        console.log(uid)
+        console.log(uid)
+        console.log(uid)
+        console.log(uid)
+        console.log(uid)
+        console.log(uid)
+        console.log(uid)
 
         try {
-            const res = await axios.post(`${ApiUrl}/good/deltealltask`,
+            // const res = await axios.post(`${ApiUrl}/good/deltealltask`,
+            const res = await axios.post(`${GoGinApiUrl}/gogood/cleanallbyuserid`,
                 {
-                    uid: uid,
+                    user_id: uid,
                     usernick: shopinfo.value.shopName,
                 },
                 {
@@ -381,6 +389,14 @@ export const useTaskStore = defineStore('usertask', () => {
                         "Content-Type": "application/json"
                     }
                 })
+
+
+
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
+            console.log(res)
             console.log(res)
             return res
         } catch (error) {
@@ -524,7 +540,7 @@ export const useTaskStore = defineStore('usertask', () => {
 
 
 
-    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo, taskcache,isLocked }
+    return { shopinfo, setSingleBook, getTaskByUid, upLoad, getmyallinfo, moreupLoad, taskstatus, newsendall, downallgoods, delteallweigui, deleteallinstock, getonepageimageanddelete, deltealltask, deleteoldgoods, gettodaytaskinfo, taskcache, isLocked }
 
 }
 )

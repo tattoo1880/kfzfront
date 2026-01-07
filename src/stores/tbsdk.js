@@ -65,6 +65,8 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
                 }
             )
             console.log(res)
+            console.log('shopsession', res.data.topSession)
+            myshopinfo.session = res.data.topSession
             return res
         } catch (error) {
             console.log(error)
@@ -192,7 +194,7 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
     }
 
     const deleteRule = async (ruleid) => {
-        
+
         try {
             const jwt = useTokenStore().getToken()
             const res = await axios.post(`${ApiUrl}/pricerule/delete`,
@@ -219,7 +221,7 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
 
 
 
-    return { getAuth, getshopbyuid, getyftemplate, updateyf, addRule, getruleByuid, deleteRule }
+    return { getAuth, getshopbyuid, getyftemplate, updateyf, addRule, getruleByuid, deleteRule, myshopinfo }
 
 }
 )

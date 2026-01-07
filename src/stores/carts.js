@@ -10,15 +10,28 @@ import { ElMessage } from 'element-plus'
 export const useCartsStore = defineStore('usecarts', () => {
 
 
+
+
+
     const carts = ref([])
 
 
     const getCartsByUid = async () => {
+
+        const usetbsdk = useTbSdkstore()
+        await usetbsdk.getshopbyuid()
+
+        const topsession = usetbsdk.myshopinfo.session
+
+        console.log('topsession in carts store', usetbsdk.myshopinfo)
         console.log('useCartsStore')
 
-        const uid = useTokenStore().getInfo().uid
-        const jwt = useTokenStore().getToken()
+        console.log('topsession', topsession)
 
+        // const uid = useTokenStore().getInfo().uid
+        // const uid = "6200828332b0a973924d61b07610f440adb8ZZ263ZZ9eb34042112053"
+        const jwt = useTokenStore().getToken()
+        const uid = topsession
         console.log('useCartsStore')
 
         console.log('uid', uid)
@@ -92,7 +105,7 @@ export const useCartsStore = defineStore('usecarts', () => {
             })
             console.log('newdeleteCartById response', response)
 
-            if (response.data.message =="DeleteByIds called"){
+            if (response.data.message == "DeleteByIds called") {
                 ElMessage.success("删除成功")
             }
             return response.data

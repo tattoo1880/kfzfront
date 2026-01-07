@@ -1,14 +1,11 @@
 <template>
-
     <div class="layout">
-
         <el-container class="bg-container">
-            <el-asider class="bg-sidebar">
+            <el-aside class="bg-sidebar">
                 <Usersiderbar />
-            </el-asider>
+            </el-aside>
 
             <el-main class="bg-main">
-
                 <el-row class="bg-row" justify="center">
                     <el-text>
                         <h2 style="color: #409eff">寻找货源</h2>
@@ -34,8 +31,12 @@
 
                 <el-row class="row-bg" justify="space-evenly">
                     <div class="mt-4">
-                        <el-input v-model="kw3" style="max-width: 1600px; width: 800px"
-                            placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条" class="input-with-select">
+                        <el-input
+                            v-model="kw3"
+                            style="max-width: 1600px; width: 800px"
+                            placeholder="配合金钥匙更新店铺违禁词,请输入单一店铺的id,确保店铺全部商品已经上架并且不要超过3万条"
+                            class="input-with-select"
+                        >
                             <template #append>
                                 <el-button @click="handlesearch3">
                                     <el-icon>
@@ -47,55 +48,62 @@
                     </div>
                 </el-row>
 
-
                 <!-- =========dialog ========= -->
-                <el-dialog v-model="showdialog" title="请选择自定义分组" width="500" :before-close="dialogclose">
+                <el-dialog
+                    v-model="showdialog"
+                    title="请选择自定义分组"
+                    width="500"
+                    :before-close="dialogclose"
+                >
                     <el-row class="row-bg" justify="center">
                         <el-col :span="24">
-                            <el-select v-model="selectshopcid" placeholder="请选择分组" style="width: 100%">
-                                <el-option v-for="item in reslist" :key="item.cid" :label="item.name"
-                                    :value="item.cid"></el-option>
+                            <el-select
+                                v-model="selectshopcid"
+                                placeholder="请选择分组"
+                                style="width: 100%"
+                            >
+                                <el-option
+                                    v-for="item in reslist"
+                                    :key="item.cid"
+                                    :label="item.name"
+                                    :value="item.cid"
+                                ></el-option>
                             </el-select>
                         </el-col>
                     </el-row>
 
                     <template #footer>
                         <div class="dialog-footer">
-                            <el-button @click="showdialog = false">取消</el-button>
+                            <el-button @click="showdialog = false"
+                                >取消</el-button
+                            >
                             <el-button type="primary" @click="newstartScrapy">
                                 开始
                             </el-button>
                         </div>
                     </template>
                 </el-dialog>
-
             </el-main>
         </el-container>
-
-
-
     </div>
-
-
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, watch } from "vue";
+import { ref, reactive, computed, onMounted, watch, onBeforeMount } from "vue";
 import { myfectch } from "@/utils/Myfetch";
 import { useTokenStore } from "@/stores/token";
 import { useTaskStore } from "@/stores/task";
 import { useCartsStore } from "@/stores/carts";
 import { ElLoading, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-
+import { useTbSdkstore } from "@/stores/tbsdk";
 
 import Usersiderbar from "@/components/Usersiderbar.vue";
-
 
 import axios from "axios";
 import GoGinApiUrl from "@/utils/GoGinApiUrl";
 const router = useRouter();
-
+const usetbsdk = useTbSdkstore();
 const { getToken } = useTokenStore();
 const useCarts = useCartsStore();
 
@@ -113,9 +121,7 @@ const totalnum = ref(0);
 
 const tabledata = ref([]);
 
-
 const items = ref([]);
-
 
 const kw2 = ref("");
 
@@ -127,7 +133,6 @@ const handlesearch2 = () => {
     console.log(reslist.value);
 };
 
-
 const handlesearch3 = async () => {
     if (kw3.value === "") {
         ElMessage.error("请输入店铺id");
@@ -135,8 +140,7 @@ const handlesearch3 = async () => {
     }
 
     showdialog.value = true;
-}
-
+};
 
 const newgetallinfonew = async (kw) => {
     var kwlist = [];
@@ -145,18 +149,18 @@ const newgetallinfonew = async (kw) => {
     } else {
         kwlist.push(kw);
     }
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    console.log(selectshopcid.value)
-    const shop_cid_str = selectshopcid.value.toString()
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    console.log(selectshopcid.value);
+    const shop_cid_str = selectshopcid.value.toString();
     try {
         const res = await axios.post(
             // "https://ss.purecode.dpdns.org/gogood/makedd",
@@ -173,15 +177,19 @@ const newgetallinfonew = async (kw) => {
         console.log("========newgetallinfonew 返回数据=========");
         console.log(res);
         console.log("========newgetallinfonew 返回数据=========");
-        return res
+        return res;
     } catch (error) {
         console.log(error);
     }
 };
 
-
 const reslist = ref([]);
 const selectshopcid = ref("");
+
+onBeforeMount(async () => {
+    console.log("Scrapy 组件加载前");
+    await usetbsdk.getshopbyuid();
+});
 
 onMounted(async () => {
     const eloading = ElLoading.service({
@@ -202,8 +210,6 @@ onMounted(async () => {
         eloading.close();
     }
 });
-
-
 
 const newstartScrapy = async () => {
     console.log("开始抓取");
@@ -237,7 +243,6 @@ const newstartScrapy = async () => {
         ElMessage.success("获取数据成功");
         router.push({ name: "Task" });
     } catch (error) {
-
         await new Promise((resolve) => setTimeout(resolve, 15000));
 
         const nosendtasknum = await useTaskStore().gettodaytaskinfo();
@@ -248,7 +253,7 @@ const newstartScrapy = async () => {
             await new Promise((resolve) => setTimeout(resolve, 30000));
 
             const res = await useTaskStore().gettodaytaskinfo();
-            const resdataqty = res.data[1]
+            const resdataqty = res.data[1];
             console.log(resdataqty);
             if (resdataqty > nosendtasknum.data[1]) {
                 ElMessage.success("获取数据成功");
@@ -262,9 +267,6 @@ const newstartScrapy = async () => {
         console.error(error);
         ElMessage.error("获取数据失败");
         eloading.close();
-
-
-
     } finally {
         // ElMessage.error("获取数据失败");
         eloading.close();
@@ -272,7 +274,6 @@ const newstartScrapy = async () => {
     }
     ElMessage.success("抓取任务已开始，请稍后查看任务列表");
 };
-
 
 const dialogclose = () => {
     showdialog.value = false;

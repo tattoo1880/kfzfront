@@ -1,6 +1,11 @@
 <template>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false"
-        @select="handleSelect">
+    <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        :ellipsis="false"
+        @select="handleSelect"
+    >
         <el-menu-item index="0">
             <!-- <img
                 style="width: 100px"
@@ -27,28 +32,48 @@
                     <strong>功能</strong>
                 </el-text>
             </template>
-            <el-menu-item style="background-color: black;" index="2-1" @click="toscrapy">
-                <el-text style="color: #409eff;background-color: black;">
+            <el-menu-item
+                style="background-color: black"
+                index="2-1"
+                @click="toscrapy"
+            >
+                <el-text style="color: #409eff; background-color: black">
                     <strong>寻找货源</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item style="background-color: black;" index="2-2" @click="totask">
+            <el-menu-item
+                style="background-color: black"
+                index="2-2"
+                @click="totask"
+            >
                 <el-text style="color: #409eff">
                     <strong>我的上传任务</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item style="background-color: black;" index="2-3" @click="toprofile">
+            <el-menu-item
+                style="background-color: black"
+                index="2-3"
+                @click="toprofile"
+            >
                 <el-text style="color: #409eff">
                     <strong>我的信息</strong>
                 </el-text>
             </el-menu-item>
-            <el-menu-item style="background-color: black;" index="2-4" @click="tousershop">
+            <el-menu-item
+                style="background-color: black"
+                index="2-4"
+                @click="tousershop"
+            >
                 <el-text style="color: #409eff">
                     <strong>我的店铺</strong>
                 </el-text>
             </el-menu-item>
             <!-- <el-menu-item index="2-2">item two</el-menu-item> -->
-            <el-menu-item style="background-color: black;" index="2-3" @click="logout">
+            <el-menu-item
+                style="background-color: black"
+                index="2-3"
+                @click="logout"
+            >
                 <el-text style="color: #409eff">
                     <strong>登出</strong>
                 </el-text>
@@ -64,11 +89,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useTokenStore } from "@/stores/token";
 import { myfectch } from "@/utils/Myfetch";
-import { fi } from "element-plus/es/locale/index.mjs";
 
 const usetoken = useTokenStore();
 
@@ -142,7 +166,6 @@ const toprofile = () => {
 const tousershop = () => {
     router.push({ name: "usershop" });
 };
-
 </script>
 
 <style>
@@ -168,8 +191,7 @@ const tousershop = () => {
     font-size: 20px;
 }
 
-
-.el-menu--horizontal>.el-menu-item:nth-child(1) {
+.el-menu--horizontal > .el-menu-item:nth-child(1) {
     background-color: #111010;
     margin-right: auto;
 }

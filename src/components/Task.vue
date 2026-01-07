@@ -594,6 +594,7 @@ const taskcache = async () => {
 
 const isopenmask = ref(false);
 let loadingInstance = null;
+let intervalId = null // 存放 setInterval 返回值
 
 // 监听 isopenmask 的变化
 watch(isopenmask, (newVal) => {
