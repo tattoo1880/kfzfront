@@ -5,6 +5,7 @@ import { useTokenStore } from './token'
 import ApiUrl from '@/utils/ApiUrl'
 import GoGinApiUrl from '@/utils/GoGinApiUrl'
 import { ElLoading, ElMessage } from 'element-plus'
+import { useTbSdkstore } from './tbsdk'
 export const useTaskStore = defineStore('usertask', () => {
 
 
@@ -300,6 +301,13 @@ export const useTaskStore = defineStore('usertask', () => {
 
     const deleteallinstock = async () => {
 
+        const usetbsdk = useTbSdkstore();
+        console.log(usetbsdk.myshopinfo)
+        console.log(usetbsdk.myshopinfo)
+        console.log(usetbsdk.myshopinfo)
+        console.log(usetbsdk.myshopinfo)
+        console.log(usetbsdk.myshopinfo)
+
 
         console.log("=====", shopinfo.value)
         const jwt = useTokenStore().getToken();
@@ -311,7 +319,7 @@ export const useTaskStore = defineStore('usertask', () => {
         try {
             const res = await axios.post(`${ApiUrl}/sdk/getallinstock`,
                 {
-                    session: uid,
+                    session: usetbsdk.myshopinfo.session,
                     usernick: shopinfo.value.shopName,
                 },
                 {
