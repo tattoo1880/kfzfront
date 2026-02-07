@@ -315,7 +315,7 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive, onMounted, watch, computed } from "vue";
 import { useTaskStore } from "@/stores/task";
 import { useCartsStore } from "@/stores/carts";
