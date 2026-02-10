@@ -218,7 +218,7 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive, onMounted } from "vue";
 import { useUserManageStore } from "@/stores/userManage";
 //todo 导入 uuid

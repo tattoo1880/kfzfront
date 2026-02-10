@@ -48,6 +48,21 @@
                     </div>
                 </el-row>
 
+                <el-row class="bg-row" justify="center">
+                    <el-text>
+                        <h2 style="color: #409eff">设置库存量</h2>
+                    </el-text>
+                </el-row>
+                <!-- <el-row class="row-bg" justify="center"> -->
+                <div class="slider-demo-block">
+                    <el-slider
+                        v-model="quantitystring"
+                        show-input
+                        @change="quantitychange"
+                    />
+                </div>
+                <!-- </el-row> -->
+
                 <!-- =========dialog ========= -->
                 <el-dialog
                     v-model="showdialog"
@@ -97,6 +112,7 @@ import { useCartsStore } from "@/stores/carts";
 import { ElLoading, ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useTbSdkstore } from "@/stores/tbsdk";
+import { useQuantityStore } from "@/stores/quantity";
 
 import Usersiderbar from "@/components/Usersiderbar.vue";
 
@@ -106,6 +122,9 @@ const router = useRouter();
 const usetbsdk = useTbSdkstore();
 const { getToken } = useTokenStore();
 const useCarts = useCartsStore();
+const useQuantity = useQuantityStore();
+
+const quantitystring = ref(0);
 
 const jwt = getToken();
 console.log("=========");
@@ -172,7 +191,7 @@ const newgetallinfonew = async (kw) => {
             },
             {
                 timeout: 0,
-            }
+            },
         );
         console.log("========newgetallinfonew 返回数据=========");
         console.log(res);
@@ -204,6 +223,13 @@ onMounted(async () => {
         console.log(res);
         console.log("=========获取到shopcid===========");
         reslist.value = res;
+
+        const quantityres = await useQuantity.getQuantity();
+        console.log("=========获取到quantity===========");
+        console.log(quantityres);
+        // 将quantityres变成int类型
+        quantitystring.value = parseInt(quantityres);
+        console.log("=========获取到quantity===========");
     } catch (error) {
         console.error(error);
     } finally {
@@ -281,6 +307,18 @@ const dialogclose = () => {
     reslist.value = [];
     console.log("关闭对话框");
 };
+
+const quantitychange = async (value) => {
+    console.log("数量改变为：" + quantitystring.value.toString());
+    try {
+        const res = await useQuantity.updateQuantity(
+            quantitystring.value.toString(),
+        );
+        console.log(res);
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 
 <style scoped>
@@ -305,5 +343,15 @@ const dialogclose = () => {
     overflow-y: auto;
 }
 
+.slider-demo-block {
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto; /* 添加这行 */
+}
+.slider-demo-block .el-slider {
+    margin-top: 0;
+    margin-left: 12px;
+}
 /* 背景图片 */
 </style>
