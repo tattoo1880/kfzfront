@@ -82,7 +82,7 @@
         <el-col :span="4">
             <el-input
                 v-model="newRule.startPrice"
-                style="width: 240px"
+                style="width: 200px"
                 placeholder="起始价格"
             />
         </el-col>
@@ -90,13 +90,13 @@
         <el-col :span="4">
             <el-input
                 v-model="newRule.endPrice"
-                style="width: 240px"
+                style="width: 200px"
                 placeholder="结束价格"
             />
         </el-col>
 
         <el-col :span="4">
-            <el-select v-model="newRule.method" style="width: 240px">
+            <el-select v-model="newRule.method" style="width: 200px">
                 <el-option label="+" value="+" />
                 <el-option label="*" value="*" />
             </el-select>
@@ -105,13 +105,25 @@
         <el-col :span="4">
             <el-input
                 v-model="newRule.value"
-                style="width: 240px"
+                style="width: 200px"
                 placeholder="数值"
             />
         </el-col>
 
         <el-col :span="4">
             <el-button type="primary" @click="addRule">添加规则</el-button>
+        </el-col>
+    </el-row>
+
+    <el-row
+        class="bg-row"
+        justify="center"
+        style="margin-top: 20px; width: 100%"
+    >
+        <el-col :span="24" style="display: flex; justify-content: center">
+            <el-button type="success" plain @click="showaddrulesdialog = true"
+                >批量添加规则</el-button
+            >
         </el-col>
     </el-row>
 
@@ -165,6 +177,34 @@
             </template>
         </el-table-column>
     </el-table>
+
+    <!-- 批量添加规则对话框 -->
+    <el-dialog
+        title="批量添加规则"
+        v-model="showaddrulesdialog"
+        width="30%"
+        center
+    >
+        <el-form
+            :model="batchRuleForm"
+            label-position="left"
+            label-width="auto"
+            class="withborder"
+        >
+            <el-form-item label="请输入规则列表（JSON格式）">
+                <el-input
+                    type="textarea"
+                    v-model="batchRuleForm.rules"
+                    placeholder='例如：[{"startPrice":0,"endPrice":100,"method":"*","value":1.1},{"startPrice":100,"endPrice":200,"method":"+","value":10}]'
+                    :rows="10"
+                />
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="addRules">确定</el-button>
+                <el-button @click="showaddrulesdialog = false">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -259,6 +299,64 @@ onMounted(async () => {
 
 const openurlhandler = () => {
     window.open(openurl.value);
+};
+
+// 批量添加规则
+const batchRuleForm = reactive({
+    rules: "",
+});
+const showaddrulesdialog = ref(false);
+
+const addRules = async () => {
+    try {
+        // 解析 JSON 字符串
+        const rules = JSON.parse(batchRuleForm.rules);
+
+        if (!Array.isArray(rules)) {
+            ElMessage.error("请输入正确的JSON数组格式");
+            return;
+        }
+
+        // 验证每条规则的格式
+        for (const rule of rules) {
+            if (
+                rule.startPrice === undefined ||
+                rule.startPrice === null ||
+                rule.endPrice === undefined ||
+                rule.endPrice === null ||
+                !rule.method ||
+                rule.value === undefined ||
+                rule.value === null
+            ) {
+                ElMessage.error("规则格式不完整");
+                return;
+            }
+        }
+
+        // 批量添加规则
+        for (const rule of rules) {
+            const ruleData = {
+                startPrice: rule.startPrice,
+                endPrice: rule.endPrice,
+                method: rule.method,
+                value: rule.value,
+                uid: shopinfo.shopUid,
+            };
+            // console.log(ruleData);
+            await useTbSdkstore().addRule(ruleData);
+        }
+
+        // 刷新规则列表
+        const res = await useTbSdkstore().getruleByuid();
+        ruletablelist.value = res.data;
+
+        ElMessage.success(`成功添加 ${rules.length} 条规则`);
+        showaddrulesdialog.value = false;
+        batchRuleForm.rules = ""; // 清空输入
+    } catch (error) {
+        console.error(error);
+        ElMessage.error("JSON格式错误，请检查输入");
+    }
 };
 </script>
 

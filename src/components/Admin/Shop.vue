@@ -7,12 +7,22 @@
 
     <!-- 新建店铺按钮 -->
     <el-row class="bg-row" justify="end" style="margin-right: 30px">
-        <el-button type="primary" :icon="CirclePlus" circle @click="prepareCreateShop" />
+        <el-button
+            type="primary"
+            :icon="CirclePlus"
+            circle
+            @click="prepareCreateShop"
+        />
     </el-row>
 
     <!-- 新建店铺dialog -->
     <el-dialog title="新建店铺" v-model="showme1" width="30%" center>
-        <el-form :model="createform" label-position="left" label-width="auto" class="withborder">
+        <el-form
+            :model="createform"
+            label-position="left"
+            label-width="auto"
+            class="withborder"
+        >
             <el-form-item label="店铺名">
                 <el-input v-model="createform.shopname" />
             </el-form-item>
@@ -25,14 +35,19 @@
             <!-- 选择用户 -->
             <el-form-item label="选择用户">
                 <el-select v-model="createform.userid" placeholder="请选择用户">
-                    <el-option v-for="item in userList" :key="item.uid" :label="item.username" :value="item.uid" ß />
+                    <el-option
+                        v-for="item in userList"
+                        :key="item.uid"
+                        :label="item.username"
+                        :value="item.uid"
+                        ß
+                    />
                 </el-select>
             </el-form-item>
 
             <!-- <el-form-item label="价格规则">
                 <el-input v-model="createform.rule" placeholder="上浮比例使用*1.x,增加使用+xx的方式"/>
             </el-form-item> -->
-
 
             <!-- <el-form-item label="店铺key">
                 <el-button type="danger" @click="aagetcookies">
@@ -50,38 +65,72 @@
     <!-- table -->
     <el-row class="row-bg" justify="center">
         <el-col :span="24">
-            <el-table :data="tabledata" style="width: 100%; height: 70vh" align="center">
-                <el-table-column prop="id" label="ID" width="100" align="center">
+            <el-table
+                :data="tabledata"
+                style="width: 100%; height: 70vh"
+                align="center"
+            >
+                <el-table-column
+                    prop="id"
+                    label="ID"
+                    width="100"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.uid }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="shopname" label="店铺名" width="150" align="center">
+                <el-table-column
+                    prop="shopname"
+                    label="店铺名"
+                    width="150"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.shopName }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="shopip" label="店铺ID" width="200" align="center">
+                <el-table-column
+                    prop="shopip"
+                    label="店铺ID"
+                    width="200"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.shopIp }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="username" label="用户名" width="120" align="center">
+                <el-table-column
+                    prop="username"
+                    label="用户名"
+                    width="120"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.user.username }}</el-tag>
                     </template>
                 </el-table-column>
                 <!-- 价格规则 -->
-                <el-table-column prop="rule" label="价格规则" width="200" align="center">
+                <el-table-column
+                    prop="rule"
+                    label="价格规则"
+                    width="200"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{ row.rule }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column prop="shopid" label="到期时间" width="200" align="center">
+                <el-table-column
+                    prop="shopid"
+                    label="到期时间"
+                    width="200"
+                    align="center"
+                >
                     <template v-slot="{ row }">
                         <el-tag type="success">{{
                             row.user.subEndTime
-                            }}</el-tag>
+                        }}</el-tag>
                     </template>
                 </el-table-column>
                 <!-- <el-table-column
@@ -97,10 +146,19 @@
                         <el-tag v-else type="success">已开启</el-tag>
                     </template>
                 </el-table-column> -->
-                <el-table-column prop="shopstatus" label="操作" width="200" align="center">
+                <el-table-column
+                    prop="shopstatus"
+                    label="操作"
+                    width="200"
+                    align="center"
+                >
                     <template v-slot="{ row }">
-                        <el-button type="primary" @click="openupdateShop(row)">编辑</el-button>
-                        <el-button type="danger" @click="handleDeleteShop(row)">删除</el-button>
+                        <el-button type="primary" @click="openupdateShop(row)"
+                            >编辑</el-button
+                        >
+                        <el-button type="danger" @click="handleDeleteShop(row)"
+                            >删除</el-button
+                        >
                     </template>
                 </el-table-column>
             </el-table>
@@ -109,20 +167,33 @@
 
     <!-- 更新shop -->
     <el-dialog title="更新店铺" v-model="showme2" width="30%" center>
-        <el-form :model="updateform" label-position="left" label-width="auto" class="withborder">
+        <el-form
+            :model="updateform"
+            label-position="left"
+            label-width="auto"
+            class="withborder"
+        >
             <el-form-item label="店铺名">
                 <el-input v-model="updateform.shopname" />
             </el-form-item>
-            <el-form-item label="手机编号">
+            <el-form-item label="用户ID">
                 <el-input v-model="updateform.uid" />
             </el-form-item>
-            <el-form-item label="手机地址端口">
+            <el-form-item label="店铺ID">
                 <el-input v-model="updateform.shopip" />
+            </el-form-item>
+            <el-form-item label="session">
+                <el-input v-model="updateform.session" />
             </el-form-item>
             <!-- 选择用户 -->
             <el-form-item label="选择用户">
                 <el-select v-model="updateform.userid" placeholder="请选择用户">
-                    <el-option v-for="item in userList" :key="item.uid" :label="item.username" :value="item.uid" />
+                    <el-option
+                        v-for="item in userList"
+                        :key="item.uid"
+                        :label="item.username"
+                        :value="item.uid"
+                    />
                 </el-select>
             </el-form-item>
 
@@ -134,7 +205,7 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive, onMounted } from "vue";
 import { useShopStore } from "@/stores/shop";
 import { ElMessage } from "element-plus";
@@ -184,9 +255,8 @@ const createShop = async () => {
         createform.uid,
         createform.shopname,
         createform.shopip,
-        createform.userid
+        createform.userid,
     );
-    
 
     if (res.data !== "") {
         showme1.value = false;
@@ -216,6 +286,7 @@ const updateform = reactive({
     uid: "",
     shopip: "",
     userid: "",
+    session: "",
 });
 
 const showme2 = ref(false);
@@ -226,6 +297,7 @@ const openupdateShop = (row) => {
     updateform.uid = row.uid;
     updateform.shopip = row.shopIp;
     updateform.userid = row.user.uid;
+    updateform.session = row.topSession;
     showme2.value = true;
 };
 
@@ -243,9 +315,9 @@ const updateShop = async () => {
     }
 };
 
-
 const aagetcookies = async () => {
-    const res = await axios.post("http://localhost:8080/getcookies",
+    const res = await axios.post(
+        "http://localhost:8080/getcookies",
         {
             shopname: createform.shopname,
             userid: createform.userid,
@@ -253,9 +325,7 @@ const aagetcookies = async () => {
         },
         {
             timeout: 1000000,
-        }
-
-
+        },
     );
 
     if (res.data.status === "ok") {
@@ -263,15 +333,12 @@ const aagetcookies = async () => {
         showme1.value = false;
         const res2 = await useShopStore().getShopList();
         tabledata.value = res2.data;
-    }
-    else {
+    } else {
         ElMessage.error("获取失败");
         showme1.value = false;
         const res2 = await useShopStore().getShopList();
         tabledata.value = res2.data;
     }
-
-
 };
 </script>
 
