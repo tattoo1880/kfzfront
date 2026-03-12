@@ -32,6 +32,11 @@
                     <strong>店铺管理</strong>
                 </el-text>
             </el-menu-item>
+            <el-menu-item index="2-1" @click="tosuser">
+                <el-text style="color: #409eff">
+                    <strong>用户管理</strong>
+                </el-text>
+            </el-menu-item>
             <el-menu-item index="2-1" @click="tocheck">
                 <el-text style="color: #409eff">
                     <strong>充值管理</strong>
@@ -124,6 +129,11 @@ const tocheck = () => {
 const toweijin = () => {
     console.log("toweijin");
     router.push({ name: "weijin" });
+};
+
+const tosuser = () => {
+    console.log("tosuser");
+    router.push({ name: "usermanage" });
 };
 </script>
 
