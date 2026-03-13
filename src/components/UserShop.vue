@@ -31,12 +31,27 @@
                 {{ shopinfo.shoptopsession }}
             </el-descriptions-item>
             <el-descriptions-item label="店铺运费规则">
-                <el-tag v-if="shopinfo.yfrule" type="success">{{
+                <!-- <el-tag v-if="shopinfo.yfrule" type="success">{{
                     shopinfo.yfrule
                 }}</el-tag>
                 <el-button v-else type="danger" plain @click="chooseyf"
                     >选择运费模版</el-button
-                >
+                > -->
+                <el-row>
+                    <el-col :span="12">
+                        <el-tag v-if="shopinfo.yfrule" type="success">{{
+                            shopinfo.yfrule
+                        }}</el-tag>
+                    </el-col>
+                    <el-col
+                        :span="12"
+                        style="display: flex; justify-content: end"
+                    >
+                        <el-button type="primary" plain @click="chooseyf"
+                            >选择运费模版</el-button
+                        >
+                    </el-col>
+                </el-row>
             </el-descriptions-item>
         </el-descriptions>
     </el-card>

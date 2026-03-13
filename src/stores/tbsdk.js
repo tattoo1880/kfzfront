@@ -87,7 +87,7 @@ export const useTbSdkstore = defineStore('usetbsdk', () => {
 
             const res = await axios.post(`${ApiUrl}/sdk/getallyftemplate`,
                 {
-                    session: uid,
+                    session: myshopinfo.session,
                     usernick: shopName
 
                 },

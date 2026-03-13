@@ -84,13 +84,20 @@
                                 清空所选分组商品
                             </el-button>
                         </el-col>
-                        <!-- <el-col :span="24" style="margin-top: 40px; padding-left: 30px">
-                            <el-button type="primary" plain @click="deleteoldgoods">
-                                删除最早的 1w 条商品
+                        <el-col
+                            :span="24"
+                            style="margin-top: 40px; padding-left: 30px"
+                        >
+                            <el-button
+                                type="primary"
+                                plain
+                                @click="opengettenthousand"
+                            >
+                                删除最早一万条数据
                             </el-button>
-                        </el-col> -->
-                    </el-row></el-aside
-                >
+                        </el-col>
+                    </el-row>
+                </el-aside>
                 <el-main class="aman">
                     <el-row class="row-bg" justify="center">
                         <el-text>
@@ -594,7 +601,7 @@ const taskcache = async () => {
 
 const isopenmask = ref(false);
 let loadingInstance = null;
-let intervalId = null // 存放 setInterval 返回值
+let intervalId = null; // 存放 setInterval 返回值
 
 // 监听 isopenmask 的变化
 watch(isopenmask, (newVal) => {
@@ -625,6 +632,22 @@ const isLocked = async () => {
 };
 
 isLocked();
+
+const opengettenthousand = async () => {
+    console.log("????===?????");
+
+    ElLoading.service({
+        fullscreen: true,
+        text: "读取远程数据中,请稍候...",
+    });
+
+    const res = await useCartsStore().Getearliesttenthousand();
+    console.log(res);
+    ElLoading.service().close();
+    ElMessage.success("读取成功!");
+    //! todo 刷新页面
+    window.location.reload();
+};
 </script>
 
 <style scoped>

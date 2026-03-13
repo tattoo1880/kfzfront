@@ -116,7 +116,36 @@ export const useCartsStore = defineStore('usecarts', () => {
     }
 
 
-    return { carts, getCartsByUid, deleteCartById, newdeleteCartById }
+    const Getearliesttenthousand = async () => {
+        const topsession = useTbSdkstore().myshopinfo.session
+        console.log('topsession in getearliesttenthousand', topsession)
+
+
+        try {
+            const res = await axios.post(`${GoGinApiUrl}/newcarts/GetEarliestThenThousand`,
+                {
+                    session: topsession
+
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${useTokenStore().getToken()}`
+                    }
+                }
+            )
+            console.log('getearliesttenthousand response', res)
+            return res
+        } catch (error) {
+
+            console.log(error)
+            return null
+
+        }
+
+
+    }
+
+    return { carts, getCartsByUid, deleteCartById, newdeleteCartById, Getearliesttenthousand }
 
 
 
