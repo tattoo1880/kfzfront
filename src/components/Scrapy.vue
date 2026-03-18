@@ -304,7 +304,7 @@ const newstartScrapy = async () => {
 const dialogclose = () => {
     showdialog.value = false;
     selectshopcid.value = "";
-    reslist.value = [];
+    // reslist.value = [];
     console.log("关闭对话框");
 };
 

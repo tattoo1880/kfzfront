@@ -115,6 +115,32 @@ export const useCartsStore = defineStore('usecarts', () => {
         }
     }
 
+    const deleteallnoreferenceimage = async () => {
+        const topsession = useTbSdkstore().myshopinfo.session
+        console.log('topsession in deleteallnoreferenceimage', topsession)
+
+        try {
+            const res = await axios.post(`${GoGinApiUrl}/newcarts/deleteallnoreferenceimage`, {
+                session: topsession
+
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${useTokenStore().getToken()}`
+                    }
+                }
+            )
+
+            console.log('deleteallnoreferenceimage success', res)
+            return res
+        } catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
 
     const Getearliesttenthousand = async () => {
         const topsession = useTbSdkstore().myshopinfo.session
@@ -145,7 +171,7 @@ export const useCartsStore = defineStore('usecarts', () => {
 
     }
 
-    return { carts, getCartsByUid, deleteCartById, newdeleteCartById, Getearliesttenthousand }
+    return { carts, getCartsByUid, deleteCartById, newdeleteCartById, Getearliesttenthousand, deleteallnoreferenceimage }
 
 
 

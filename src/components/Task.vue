@@ -96,6 +96,18 @@
                                 删除最早一万条数据
                             </el-button>
                         </el-col>
+                        <el-col
+                            :span="24"
+                            style="margin-top: 40px; padding-left: 30px"
+                        >
+                            <el-button
+                                type="primary"
+                                plain
+                                @click="deleteallnoreferenceimage"
+                            >
+                                删除所有未引用图片
+                            </el-button>
+                        </el-col>
                     </el-row>
                 </el-aside>
                 <el-main class="aman">
@@ -584,6 +596,23 @@ const confirmdelete = async () => {
     } finally {
         ElLoading.service().close();
         dialogclose();
+    }
+};
+
+const deleteallnoreferenceimage = async () => {
+    try {
+        ElLoading.service({
+            fullscreen: true,
+            text: "删除中，请稍后...",
+        });
+        const res = await useCartsStore().deleteallnoreferenceimage();
+        ElMessage.success("删除成功");
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+        ElMessage.error("删除失败");
+    } finally {
+        ElLoading.service().close();
     }
 };
 
