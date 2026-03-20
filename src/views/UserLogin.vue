@@ -1,49 +1,92 @@
 <template>
-
     <div class="common-layout">
-        <el-affix style="position: fixed; top: 20px; right: 50px; z-index: 999;">
+        <el-affix style="position: fixed; top: 20px; right: 50px; z-index: 999">
             <el-button type="primary">
-                <h3 style="color: #409eff; font-family: 'ZCOOL KuaiLe', sans-serif;">上书宝</h3>
+                <h3
+                    style="
+                        color: #409eff;
+                        font-family: &quot;ZCOOL KuaiLe&quot;, sans-serif;
+                    "
+                >
+                    上书宝
+                </h3>
             </el-button>
-
         </el-affix>
         <el-row class="row-bg" justify="center">
             <el-col :span="12" class="aside-col">
                 <div class="aside">
-                    <el-image style="width: 100%; height: 100%" :src="srcImage" :fit="fit"></el-image>
+                    <el-image
+                        style="width: 100%; height: 100%"
+                        :src="srcImage"
+                        :fit="fit"
+                    ></el-image>
                 </div>
             </el-col>
             <el-col :span="12">
                 <div class="aside-right">
                     <el-row class="row-bg" justify="center">
                         <el-col :span="24">
-                            <el-form :label-position="Top" label-width="auto" :model="formLabelAlign"
-                                style="max-width: 600px" class="withborder">
+                            <el-form
+                                :label-position="Top"
+                                label-width="auto"
+                                :model="formLabelAlign"
+                                style="max-width: 600px"
+                                class="withborder"
+                            >
                                 <el-form-item style="width: 100%">
-                                    <el-row class="row-bg" justify="center" style="width: 100%">
+                                    <el-row
+                                        class="row-bg"
+                                        justify="center"
+                                        style="width: 100%"
+                                    >
                                         <el-text>
-                                            <h2 style="color: #409eff" class="glow-title2">
+                                            <h2
+                                                style="color: #409eff"
+                                                class="glow-title2"
+                                            >
                                                 LOGIN
                                             </h2>
                                         </el-text>
                                     </el-row>
                                 </el-form-item>
                                 <!-- 用户名 -->
-                                <el-form-item label="USERNAME" class="itemxxxx" label-position="left">
-                                    <el-input v-model="formLabelAlign.name" input-style="color: #409EFF;" />
+                                <el-form-item
+                                    label="USERNAME"
+                                    class="itemxxxx"
+                                    label-position="left"
+                                >
+                                    <el-input
+                                        v-model="formLabelAlign.name"
+                                        input-style="color: #409EFF;"
+                                    />
                                 </el-form-item>
 
                                 <!-- 密码 -->
-                                <el-form-item label="PASSWORD" class="itemxxxx" label-position="left">
-                                    <el-input v-model="formLabelAlign.password" type="password"
-                                        input-style="color: #409EFF;" />
+                                <el-form-item
+                                    label="PASSWORD"
+                                    class="itemxxxx"
+                                    label-position="left"
+                                >
+                                    <el-input
+                                        v-model="formLabelAlign.password"
+                                        type="password"
+                                        input-style="color: #409EFF;"
+                                    />
                                 </el-form-item>
 
                                 <!-- 两个按钮 -->
                                 <el-form-item class="itembutton">
-                                    <el-row class="row-bg" justify="center" style="width: 100%">
-                                        <el-button type="primary" @click="login">登录</el-button>
-                                        <el-button type="primary" @click="toReg">注册</el-button>
+                                    <el-row
+                                        class="row-bg"
+                                        justify="center"
+                                        style="width: 100%"
+                                    >
+                                        <el-button type="primary" @click="login"
+                                            >登录</el-button
+                                        >
+                                        <el-button type="primary" @click="toReg"
+                                            >注册</el-button
+                                        >
                                     </el-row>
                                 </el-form-item>
                             </el-form>
@@ -61,7 +104,7 @@ import { ElMessage } from "element-plus";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useTokenStore } from "@/stores/token";
-import srcImage from "@/assets/loginimage.jpeg";
+import srcImage from "@/assets/newloginimage.jpeg";
 
 const { setToken, setInfo } = useTokenStore();
 
@@ -116,8 +159,6 @@ const toReg = () => {
         0 0 5px rgba(64, 158, 255, 0.8),
         0 0 10px rgba(64, 158, 255, 0.6),
         0 0 15px rgba(64, 158, 255, 0.4);
-
-
 }
 
 /* 修改输入框样式 */
@@ -178,7 +219,6 @@ const toReg = () => {
     object-fit: cover;
 }
 
-
 .aside-right {
     display: flex;
     flex-direction: column;
@@ -214,19 +254,22 @@ const toReg = () => {
 
 @keyframes text-flicker {
     0% {
-        text-shadow: 0 0 5px rgba(64, 162, 227, 0.7),
+        text-shadow:
+            0 0 5px rgba(64, 162, 227, 0.7),
             0 0 10px rgba(64, 162, 227, 0.5);
         opacity: 1;
     }
 
     50% {
-        text-shadow: 0 0 20px rgba(64, 162, 227, 1),
+        text-shadow:
+            0 0 20px rgba(64, 162, 227, 1),
             0 0 30px rgba(64, 162, 227, 0.8);
         opacity: 0.9;
     }
 
     100% {
-        text-shadow: 0 0 5px rgba(64, 162, 227, 0.7),
+        text-shadow:
+            0 0 5px rgba(64, 162, 227, 0.7),
             0 0 10px rgba(64, 162, 227, 0.5);
         opacity: 1;
     }
@@ -247,7 +290,6 @@ const toReg = () => {
         0 0 5px rgba(64, 158, 255, 0.8),
         0 0 10px rgba(64, 158, 255, 0.6),
         0 0 15px rgba(64, 158, 255, 0.4);
-
 }
 
 @keyframes glow-text {
@@ -266,8 +308,6 @@ const toReg = () => {
     }
 }
 
-
-
 .itemxxxx {
     margin: 10px;
     padding: 10px;
@@ -278,7 +318,6 @@ const toReg = () => {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(64, 162, 227, 0.927);
     animation: blue-glow 2s infinite alternate;
-
 }
 
 .itembutton {

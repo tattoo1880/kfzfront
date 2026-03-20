@@ -95,6 +95,12 @@
                             <el-button type="primary" @click="newstartScrapy">
                                 开始
                             </el-button>
+                            <el-button
+                                type="warning"
+                                @click="newstartScrapyStrict"
+                            >
+                                严谨模式开始
+                            </el-button>
                         </div>
                     </template>
                 </el-dialog>
@@ -202,6 +208,38 @@ const newgetallinfonew = async (kw) => {
     }
 };
 
+const newgetallinfostrict = async (kw) => {
+    var kwlist = [];
+    if (kw.includes("-")) {
+        kwlist = kw.split("-");
+    } else {
+        kwlist.push(kw);
+    }
+    console.log(selectshopcid.value);
+
+    const shop_cid_str = selectshopcid.value.toString();
+    try {
+        const res = await axios.post(
+            // "https://ss.purecode.dpdns.org/gogood/makedd",
+            `${GoGinApiUrl}/gogood/makestrict`,
+            {
+                shop_id: kwlist,
+                user_id: useTokenStore().getInfo().uid,
+                shop_cid: shop_cid_str,
+            },
+            {
+                timeout: 0,
+            },
+        );
+        console.log("========newgetallinfonew 返回数据=========");
+        console.log(res);
+        console.log("========newgetallinfonew 返回数据=========");
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const reslist = ref([]);
 const selectshopcid = ref("");
 
@@ -255,6 +293,70 @@ const newstartScrapy = async () => {
     });
     try {
         const res = await newgetallinfonew(kw3.value);
+        console.log(res);
+        if (res.status !== 200) {
+            throw new Error("获取数据失败");
+        }
+        if (res.data.message == "Goods created successfully") {
+            ElMessage.success("获取数据成功");
+            router.push({ name: "Task" });
+        } else {
+            throw new Error("获取数据失败");
+        }
+        eloading.close();
+        ElMessage.success("获取数据成功");
+        router.push({ name: "Task" });
+    } catch (error) {
+        await new Promise((resolve) => setTimeout(resolve, 15000));
+
+        const nosendtasknum = await useTaskStore().gettodaytaskinfo();
+        console.log(nosendtasknum);
+        console.log(nosendtasknum.data[1]);
+        //! 循环10 次
+        for (let i = 0; i < 10; i++) {
+            await new Promise((resolve) => setTimeout(resolve, 30000));
+
+            const res = await useTaskStore().gettodaytaskinfo();
+            const resdataqty = res.data[1];
+            console.log(resdataqty);
+            if (resdataqty > nosendtasknum.data[1]) {
+                ElMessage.success("获取数据成功");
+                router.push({ name: "Task" });
+                break;
+            } else {
+                continue;
+            }
+        }
+
+        console.error(error);
+        ElMessage.error("获取数据失败");
+        eloading.close();
+    } finally {
+        // ElMessage.error("获取数据失败");
+        eloading.close();
+        router.push({ name: "Task" });
+    }
+    ElMessage.success("抓取任务已开始，请稍后查看任务列表");
+};
+
+const newstartScrapyStrict = async () => {
+    console.log("开始抓取");
+    console.log(kw3.value);
+    console.log(selectshopcid.value);
+
+    if (kw3.value === "" || selectshopcid.value === "") {
+        ElMessage.error("请填写店铺名和选择分组");
+        return;
+    }
+
+    const eloading = ElLoading.service({
+        lock: true,
+        text: "正在获取数据",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+    });
+    try {
+        const res = await newgetallinfostrict(kw3.value);
         console.log(res);
         if (res.status !== 200) {
             throw new Error("获取数据失败");
