@@ -68,7 +68,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import { useMessageStore } from "@/stores/message.js";
 import axios from "axios";
 const messageStore = useMessageStore();
-const messagelist = computed(() => messageStore.gettheMessageList());
+const messagelist = computed(() => messageStore.messagelist);
 console.log("💬 当前消息列表:", messagelist.value);
 
 const markAsRead = async (id) => {
@@ -80,16 +80,6 @@ const deleteMessage = async (id) => {
     console.log("🗑️ 删除消息，ID:", id);
     await messageStore.deleteMessage(id);
 };
-
-onMounted(async () => {
-    console.log("📥 组件已挂载，正在获取消息列表...");
-    await messageStore.getallmessagebyuserid();
-});
-
-
-
-
-
 
 const deleteAllMessages = async () => {
     console.log("🗑️ 删除全部消息");
