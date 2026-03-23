@@ -21,12 +21,17 @@
                 </strong>
             </el-text>
         </el-menu-item>
-        <el-menu-item index="1" @click="handermenuitemone">
+        <el-menu-item index="1" @click="handleclickmessage">
+            <el-text style="color: #409eff">
+                <el-icon><MessageBox /></el-icon>
+            </el-text>
+        </el-menu-item>
+        <el-menu-item index="2" @click="handermenuitemone">
             <el-text style="color: #409eff">
                 <strong>{{ userinfo.username }} 欢迎登录</strong>
             </el-text>
         </el-menu-item>
-        <el-sub-menu index="2">
+        <el-sub-menu index="3">
             <template #title>
                 <el-text style="color: #409eff">
                     <strong>功能</strong>
@@ -135,7 +140,7 @@ const logout = async () => {
                 headers: {
                     Authorization: `Bearer ${jwt}`,
                 },
-            }
+            },
         );
         console.log(res);
         if (res.data.uid === userinfo.uid) {
@@ -165,6 +170,10 @@ const toprofile = () => {
 
 const tousershop = () => {
     router.push({ name: "usershop" });
+};
+
+const handleclickmessage = () => {
+    router.push({ name: "Message" });
 };
 </script>
 

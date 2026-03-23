@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useTokenStore } from '@/stores/token'
 import { ElMessage } from 'element-plus'
 
@@ -31,7 +31,7 @@ const router = createRouter({
           component: () => import('@/components/Task.vue')
         },
         {
-          path :'Profile',
+          path: 'Profile',
           "name": "Profile",
           component: () => import('@/components/Profile.vue')
         },
@@ -39,6 +39,11 @@ const router = createRouter({
           path: 'usershop',
           name: 'usershop',
           component: () => import('@/components/UserShop.vue')
+        },
+        {
+          path: 'message',
+          name: 'Message',
+          component: () => import('@/components/Message.vue')
         }
       ],
       meta: {
@@ -81,6 +86,8 @@ const router = createRouter({
           component: () => import('@/components/Admin/Weijin.vue')
 
         }
+
+
       ]
     }
   ],

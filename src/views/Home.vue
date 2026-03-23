@@ -15,14 +15,48 @@ import { ref, watch, onMounted, onUnmounted, provide, computed } from "vue";
 import Myheader from "@/components/Myheader.vue";
 import WssBaseUrl from "@/utils/Wssurl.js";
 import { useTokenStore } from "@/stores/token.js";
+import { useMessageStore } from "@/stores/message.js";
 import { ElLoading, ElMessage } from "element-plus";
 
 const tokenStore = useTokenStore();
 const socket = ref(null);
 const isConnected = ref(false);
+const messageStore = useMessageStore();
 
 // 使用 computed 监听用户ID
 const userId = computed(() => tokenStore.userinfo?.uid);
+
+// 发送消息的通用函数
+const sendMessage = (data) => {
+    if (!data || typeof data !== "object") {
+        data = "ping";
+    }
+
+    // 1. 检查 socket 是否存在且处于 OPEN 状态 (1 代表连接成功)
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+        // 2. 将对象转换为字符串发送（后端通常接收字符串化的 JSON）
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        console.log("📤 准备发送消息:", data);
+        const messageStr = JSON.stringify(data);
+        socket.value.send(messageStr);
+        console.log("📤 消息已发送:", data);
+    } else {
+        console.error("❌ 消息发送失败：WebSocket 未连接或已断开");
+        ElMessage.error("网络连接已断开，请稍后再试");
+    }
+};
 
 // WebSocket 连接函数
 const connectWebSocket = (uid) => {
@@ -54,6 +88,9 @@ const connectWebSocket = (uid) => {
         };
         socket.value.send(JSON.stringify(authData));
         console.log("📤 发送认证:", authData);
+
+        // 发送初始消息（如果需要）
+        sendMessage("ping");
     };
 
     socket.value.onmessage = (event) => {
@@ -77,6 +114,20 @@ const connectWebSocket = (uid) => {
             if (hasMatch) {
                 ElMessage.warning("爬虫任务正在运行");
             }
+        }
+
+        if (message.message === "message_list") {
+            console.log("📬 收到消息列表:", message.data);
+            messageStore.fillMessageList(message.data);
+
+            const response1 = messageStore.gettheMessageList();
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
+            console.log("📬 从消息存储获取的消息列表:", response1);
         }
     };
 
@@ -129,6 +180,9 @@ onUnmounted(() => {
         socket.value.close();
     }
 });
+
+// 提供 sendMessage 函数给子组件使用
+provide("sendMessage", sendMessage);
 </script>
 
 <style scoped>
