@@ -68,7 +68,7 @@ import { ref, reactive, onMounted, computed } from "vue";
 import { useMessageStore } from "@/stores/message.js";
 import axios from "axios";
 const messageStore = useMessageStore();
-const messagelist = computed(() => messageStore.messagelist);
+const messagelist = computed(() => messageStore.gettheMessageList());
 console.log("💬 当前消息列表:", messagelist.value);
 
 const markAsRead = async (id) => {
