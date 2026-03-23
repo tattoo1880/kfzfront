@@ -90,7 +90,7 @@ const connectWebSocket = (uid) => {
         console.log("📤 发送认证:", authData);
 
         // 发送初始消息（如果需要）
-        sendMessage("ping");
+        // sendMessage("ping");
     };
 
     socket.value.onmessage = (event) => {
