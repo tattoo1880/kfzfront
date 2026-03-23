@@ -26,7 +26,7 @@
         <el-upload
             class="upload-demo"
             drag
-            action="https://ss.purecode.dpdns.org/gogood/gostrict/upload"
+            action="https://ss.purecode.dpdns.org/gostrict/upload"
             multiple
         >
             <el-icon class="el-icon--upload"><upload-filled /></el-icon>
