@@ -7,6 +7,17 @@
         </el-row>
     </div>
 
+    <!-- todo 加一个全部删除的按钮在最右侧 -->
+    <el-row
+        class="row-bg"
+        justify="end"
+        style="margin-top: 10px; margin-right: 5%"
+    >
+        <el-button size="small" type="danger" @click="deleteAllMessages">
+            删除全部消息
+        </el-button>
+    </el-row>
+
     <el-row class="row-bg" justify="center" style="margin-top: 20px">
         <el-table
             :data="messagelist"
@@ -68,6 +79,21 @@ const markAsRead = async (id) => {
 const deleteMessage = async (id) => {
     console.log("🗑️ 删除消息，ID:", id);
     await messageStore.deleteMessage(id);
+};
+
+onMounted(async () => {
+    console.log("📥 组件已挂载，正在获取消息列表...");
+    await messageStore.getallmessagebyuserid();
+});
+
+
+
+
+
+
+const deleteAllMessages = async () => {
+    console.log("🗑️ 删除全部消息");
+    await messageStore.clearMessages();
 };
 </script>
 
